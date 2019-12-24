@@ -1,0 +1,113 @@
+﻿@using Kendo.Mvc.UI;
+@{
+    ViewBag.Title = "_partialAddRoomType";
+    Layout = null;
+}
+<form id="AddForm">
+    <div id="save-container" style="margin-left: -16px">
+
+        <div class="col-lg-12">
+
+            <div class="col-lg-6">
+                @Html.Label("RoomType:", htmlAttributes: new { @class = "control-label", required = "required",})
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-64px;margin-top:10px">
+                <input type="text" id="txtroomtype" value="" style="width:221px">
+
+            </div>
+        </div>
+        <div class="clearfix" style="padding-bottom: 10px;"></div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                @Html.Label("Max_Adult No:", htmlAttributes: new { @class = "control-label", })
+
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px">
+
+                <input type="number" id="txtadult" name="quantity" min="1" max="4" style="width:221px;height: 25px;">
+            </div>
+
+        </div>
+
+        <div class="clearfix" style="padding-bottom: 10px;"></div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                @Html.Label("Max_Child No:", htmlAttributes: new { @class = "control-label", })
+
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px">
+
+                <input type="number" id="txtchild" name="quantity" min="1" max="2" style="width:221px;height: 25px;">
+            </div>
+
+        </div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                @Html.Label("Bed No:", htmlAttributes: new { @class = "control-label",})
+
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px">
+
+                <input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 25px;margin-top:10px">
+            </div>
+
+        </div>
+        <div class="clearfix" style="padding-bottom: 10px;"></div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                @Html.Label("Room Status:", htmlAttributes: new { @class = "control-label",})
+
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px">
+
+                <select name="RoomStatus" id="txtroomstatus" style="width: 220px;height: 28px;">
+                    <option value="volvo">---Select-----</option>
+                    <option value="volvo">Available</option>
+                    <option value="volvo">Booked</option>
+                    <option value="volvo">Not Available</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col-lg-12">
+
+            <div class="col-lg-6">
+                @Html.Label("Description:", htmlAttributes: new { @class = "control-label", required = "required"})
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-64px;margin-top:10px">
+                @Html.TextArea("txtDescription", "", new { @class = "k-textbox", style = "width:228px,height:60px;", required = "required", validationmessage = "*", })
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix" style="padding-bottom: 10px;"></div>
+
+    <div class="row" style="margin-top:5px"></div>
+    <div class="rowbtn" style="margin-left: 219px;
+    margin-top: 28px;">
+        @*@(Html.Kendo().Button()
+                              .Name("btnSave")
+                              .Content("Save")
+                              .HtmlAttributes(new { type = "button", @class = "btn btn-primary", style = "height:35px;width:70px;" })
+                              .Events(e => e.Click("btnSave_Click"))
+            )*@
+        <button id="btnSave" class="k-primary" onclick="btnSave_Click()" style="border-color: darkslategrey;background-color: darkslategray;">Save</button>
+
+        @*@(Html.Kendo().Button()
+                               .Name("btnReset")
+                               .Content("Reset")
+                                             .HtmlAttributes(new { type = "button", @class = "btn btn-default", style = "height:35px;width:70px;" })
+                             .Events(e => e.Click("btnReset_Click"))
+            )*@
+
+        <button id="btnReset" class="k-primary" style="border-color: darkslategrey;background-color: darkslategray;">Reset</button>
+    </div>
+</form>

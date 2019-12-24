@@ -1,0 +1,299 @@
+﻿@using Kendo.Mvc.UI;
+@using DataModel;
+@{
+    /**/
+
+    ViewBag.Title = "RoomTypeWindow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #grid1 {
+        margin-top: 35px;
+        margin-left: 66px;
+    }
+
+    .k-state-active {
+        display: none;
+    }
+
+    }
+
+    element.style {
+    }
+
+    .k-button.k-button-icontext .k-icon, .k-button.k-button-icontext .k-image {
+        vertical-align: text-top;
+    }
+</style>
+<link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/kendo/kendo.web.min.js"></script>
+<script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
+<script src="~/Scripts/kendo/kendo.all.min.js"></script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgadd').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    function show1(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgabout').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+
+
+
+<div class="col-md-12">
+    <div class="clearfix" style="padding-bottom: 20px;"></div>
+    <div id="grid1" class="k-widget k-grid k-display-block">
+        @(Html.Kendo().Grid<HTMS.Models.RoomTypes>()
+                                        .Name("grid")
+                                        // .AutoBind(false)
+                                        .Columns(columns =>
+                                        {
+                                            //columns.Bound(c => c.id).Width(40);
+
+                                            columns.Bound(c => c.RoomTypeName).Title("RoomTypeName").Width(100);
+                                            columns.Bound(c => c.Max_Adult_No).Title("Max_Adult_No").Width(100);
+                                            columns.Bound(c => c.Max_Child_No).Title("Max_Child_No").Width(100);
+                                            columns.Bound(c => c.Max_Child_No).Title("Description").Width(100).Filterable(false);
+                                            //columns.Command(command => command.Custom("View").Click("showDetails")).Width(120);
+
+                                            //columns.Command(c =>
+                                            //{
+                                            //    c.Destroy();
+                                            //}).Title("Remove").Width(200);
+                                        })
+
+                //                             .Events(e => e.DataBound("onRowBound"))
+                //                              .Filterable(filterable => filterable
+                //                             .Extra(false)
+                //                             .Operators(operators => operators
+                //                            .ForString(str => str.Clear()
+                //                            .StartsWith("Starts with")
+                //                            .IsEqualTo("Is equal to")
+                //                            .IsNotEqualTo("Is not equal to")
+                //                                ))
+                //)
+                //.Selectable(selectable => selectable
+                //.Type(GridSelectionType.Row))
+                // .PersistSelection(true)
+                //  .Navigatable()
+
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .Model(model => model.Id(p => p.id))
+               .PageSize(10)
+              .Read(read => read.Action("BindAllRoomType", "RoomType"))
+                // .Read(read => read.Action("BindAllRoomType", "RoomType").Type(HttpVerbs.Get))
+                //.Destroy(destroy => destroy.Action("DeleteRoomType", "RoomType"))
+                )
+                //.Resizable(resize => resize
+                //.Columns(true)
+                //)
+                .ToolBar(toolbar =>
+                {
+                    toolbar.Template("<button id='newAdd' class='k-button k-button-icontext'>+ADD RoomType</button>");
+                    //toolbar.Custom().Name("newAdd").Text("+ Add New Record ").HtmlAttributes(new { id = "newAdd", onclick = "openwindow();" });
+                })
+        .Pageable(pageable =>
+        {
+
+        })
+        )
+
+
+    </div>
+</div>
+
+
+@*======================================================<  Add new Part    >=====================================*@
+
+
+<script>
+    $("#newAdd").click(function (e) {
+        debugger
+        e.preventDefault();
+        $("#AddDetails").data("kendoWindow").center().open();
+        $("#newAdd").show();
+        //btnReset_Click();
+        $("#btnSave").kendoButton({}).data("kendoButton").enable(true);
+
+    });
+</script>
+
+<div class="col-md-12">
+    @(Html.Kendo().Window().Name("AddDetails")
+                                                .Title("ADD ")
+                                .Visible(false)
+                                .Modal(true)
+                                .Content(@<text>
+                                    <div style="width:100%" id="fieldlist">
+                                        @Html.Partial("_partialAddRoomType")
+                                    </div>
+                                </text>)
+                                                                                                .Draggable()
+                                                                                                .Width(664)
+                                                                                                .Height(465)
+                                                                                                .Actions(actions => actions.Close())
+
+    )
+</div>
+
+<script type="text/javascript">
+    function onClose() {
+        debugger;
+        $("#newAdd").show();
+        // btnReset_Click();
+    }
+    $(document).ready(function () {
+        $("#newAdd").bind("click", function () {
+            debugger;
+            $("#AddDetails").data("kendoWindow").center().open();
+            $("#newAdd").show();
+            $("#btnSave").kendoButton({}).data("kendoButton").enable(true);
+        });
+    });
+</script>
+
+
+
+
+@*<script type="text/javascript">
+        function btnSave_Click() {
+            debugger;
+            var validator = $("#save-container").kendoValidator().data("kendoValidator");
+            if (validator.validate()) {
+                var roomtypeModel = {
+
+                    RoomName: $('#txtroomtype').val(),
+                    Max_Adult_No: $('#txtadult').val(),
+                    Max_Child_No: $('#txtchild').val(),
+                    BedId: $('#txtbed').val(),
+                    Description: $('#txtroomstatus').val(),
+                    RoomStatusId: $('#txtbed').val(),
+
+
+                }
+                var model = {
+                    "about": roomtypeModel
+                }
+                $.ajax({
+
+                    type: "POST",
+                    url: "/RoomType/AddRoomType",
+                    data: model,
+                    datatype: "json",
+                   // contentType: "application/json; charset=utf-8",
+                    cache: false,
+                    success: function (data) {
+
+                    },
+                });
+                //btnReset_Click();
+                var wnd = $("#AddDetails").data("kendoWindow");
+                wnd.center().close();
+                //alert("Added successfully!");
+                var grid = $('#grid').data('kendoGrid');
+                grid.dataSource.read();
+            }
+            else {
+                return false;
+            }
+        }
+        //function btnReset_Click() {
+        //    debugger
+        //    document.getElementById("txtHeader").value = "";
+        //    $(".k-upload-files.k-reset").find("li").remove();
+        //    $(".k-upload-status-total").remove();
+
+        //    $('#imgadd').attr('src', '');
+
+        //    document.getElementById("txtContactDescription").value = "";
+        //   return;
+        //}
+    </script>*@
+
+@*-----------------------------Add function---------------------------------*@
+
+<script type="text/javascript">
+
+    function btnSave_Click() {
+        debugger;
+
+        var validator = $('#save-container').kendoValidator().data("kendoValidator");
+
+
+        if (validator.validate()) {
+
+
+            var prdModel = {
+            
+                RoomName: $("#txtroomtype").val(),
+                Max_Adult_No: $("#txtadult").val(),
+                Max_Child_No: $("#txtchild").val(),
+                BedId: $("#txtbed").val(),
+                Description: $("#txtroomstatus").val(),
+                RoomStatusId: $("#txtbed").val(),
+                
+            }
+            var model = {
+                "obj": prdModel
+            }
+            $.ajax({
+                type: "POST",
+                url: "/RoomType/AddRoomType",
+
+                data: model,
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+
+                        debugger;
+
+                        // btnReset_Click();
+                        // location.reload();
+                        alert("RoomType added Successfully");
+                        location.reload();
+                        var grid = $('#grid').data("kendoGrid");
+                        grid.dataSource.read();
+
+                        return true;
+                    }
+                    else
+                        return false;
+                },
+                error: function (err) {
+                    alert("fail");
+
+                }
+            });
+            // closeNav();
+            var grid = $('#grid').data("kendoGrid");
+            grid.dataSource.read();
+        }
+    }
+
+</script>
+

@@ -1,0 +1,260 @@
+﻿
+@model HTMS.Models.CountryModel
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
+
+<link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />
+
+<link href="~/Content/kendo/kendo.default.mobile.min.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/kendo/2014.1.318/jquery.min.js"></script>
+
+<script src="~/Scripts/kendo/kendo.all.min.js"></script>
+
+
+
+<style>
+    .k-grid-content {
+        height: auto !important;
+        max-height: 500px !important;
+    }
+
+    .k-state-default {
+        background-color: none;
+    }
+
+    .k-dropzone {
+        padding: .0em !important;
+    }
+
+    .clearfix {
+        clear: both;
+        height: 10px;
+    }
+
+    .k-upload-files {
+        display: none !important;
+    }
+
+    .btn-primary {
+        background-color: #559cef !important;
+        border-color: #1ba1e2 !important;
+    }
+
+        .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+            background-color: #1ba1e2;
+            border-color: #1ba1e2;
+        }
+
+
+
+    .k-grid-header th.k-header:nth-last-child(1), .k-grid-header th.k-header:nth-last-child(2), .k-grid tbody td:nth-last-child(1), .k-grid tbody td:nth-last-child(2) {
+        border-left: 1px solid #ccc;
+        padding: 3px 9px;
+    }
+
+    .k-grid-header th.k-header:nth-last-child(3), .k-grid tbody td:nth-last-child(3) {
+        padding: 3px 9px;
+    }
+
+
+
+    #update-container {
+        font-size: 10px;
+    }
+
+    .k-select {
+        background-color: #fff;
+    }
+
+    .k-input {
+        background-color: #fff;
+    }
+
+    .k-dropdown .k-input, .k-selectbox .k-input {
+        background: #fff;
+    }
+</style>
+
+<style>
+    #btn_help, #btn_upload, #btn_approvelead, #btn_appointment, #btn_phone, #btn_SaveClose, #btn_SaveData, #btn_email, #btn_Assign, #btn_Track, #btn_Activate, #btn_Deactivate {
+        display: none !important;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    function numbersonly(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode
+        if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
+            if (unicode < 48 || unicode > 57) //if not a number
+                return false //disable key press
+        }
+    }
+</script>
+<style>
+    #sep_Create, #btn_upload, #sep_upload {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgadd').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    function show1(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgbrandss').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<style>
+    .k-upload-button {
+        width: 202px !important;
+    }
+
+    .breadcrumb {
+        margin-left: 77px;
+    }
+
+    .openbtn {
+        /*font-size: 20px;*/
+        cursor: pointer;
+        background-color: darkslategray;
+        border-radius: 9%;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        margin-top: 58px;
+        margin-left: 81px;
+    }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+    .Country {
+        margin-left: 77px
+    }
+
+    .k-widget k-grid {
+        height: 250px;
+    }
+        .k-widget k-grid k-display-block{
+            height:317px;
+        }
+
+</style>
+
+
+
+
+
+
+
+
+
+<div id="main">
+    <button class="openbtn" onclick="openNav()">+Add New</button>
+
+
+</div>
+
+@********************************common design************************************@
+<div id="breadcrumb">
+    <ul class="breadcrumb">
+        <li><a href="~/Admin/Index" style="color:#797979;"><i class="fa fa-home fa-1x" aria-hidden="true" style="color:#797979;"></i></a></li>
+        <i class="fa fa-chevron-right" aria-hidden="true" style="color:#797979; "></i>
+        <li class="breadcrumb-item"><a href="~/ModuleSetup/Index" style="color:#797979;text-decoration: none">Dashboard</a></li>
+        <li class="breadcrumb-item active" style="color:#797979;">Country</li>
+    </ul>
+</div>
+<div class="btmline"></div>
+@*<div style="background-color:rgb(234, 233, 233);height:41px">
+        <h4 class="headlbl">
+            Country
+        </h4>
+    </div>*@
+@*<div class="btmline"></div>*@
+<div class="panel panel-default" style="border:none;margin-top: -15px;">
+    @*<div class="panel-body">@Html.Partial("_RibbonMenu")</div>*@
+</div>
+@********************************Grid************************************@
+
+<div class="Country">
+    @(Html.Kendo().Grid<HTMS.Models.CountryModel>()
+                                                            .Name("grid")
+                                                            .Columns(columns =>
+                                                            {
+                                                                // columns.Bound(p => p.Id).Filterable(false);
+                                                                columns.Bound(p => p.CountryName).Width(400).Title("CountryName");
+                                                                //columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
+                                                                columns.Bound(p => p.Description).Width(400).Title("Description");
+                                                                columns.Template(e => { }).ClientTemplate(" ").Width(140).Title("Action");
+
+                                                            })
+                                                            .Pageable()
+                                                            .Sortable()
+                                                            .Scrollable()
+
+                                                            // .Filterable()
+                                                            .HtmlAttributes(new { style = "height:550px;" })
+                                                            .DataSource(dataSource => dataSource
+                                                                .Ajax()
+                                                                .Model(model => model.Id(p => p.Id))
+                                                                .PageSize(20)
+                                                             .Read(read => read.Action("CountryNameBinds", "Country"))
+                                                             )
+    )
+</div>
+
+
+
+
+
+@*----------------------sidenav-----------------------------------------------*@
+
+
+
+
+<section id="addnew">
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+
+    </div>
+
+
+
+</section>
+<script>
+    function openNav() {
+       // alert("hii");
+        document.getElementById("mySidebar").style.width = "350px";
+        document.getElementById("main").style = "350px";
+    }
+
+    function closeNav() {
+        debugger;
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style = "0";
+    }
+</script>
