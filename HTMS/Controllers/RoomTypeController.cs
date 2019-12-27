@@ -45,7 +45,7 @@ namespace HTMS.Controllers
         {
             return View();
         }
-        public List<RoomType> GetAllRoomType()
+        public IEnumerable<RoomType> GetAllRoomType()
         {
 
             try
@@ -110,7 +110,7 @@ namespace HTMS.Controllers
             try
             {
 
-                var data = GetAllRoomType().ToList();
+                var data = GetAllRoomType();
                 var query = (from a in data
                              select new RoomTypes
                              {
