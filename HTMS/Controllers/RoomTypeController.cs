@@ -20,6 +20,8 @@ using System.Web.Mvc;
 
 namespace HTMS.Controllers
 {
+
+
     public class RoomTypeController : Controller
     {
         HttpClient client = new HttpClient();
