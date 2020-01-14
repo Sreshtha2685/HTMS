@@ -96,6 +96,10 @@ namespace WebApi.Controllers
                              Code = country.Code,
                                 Max_Child_No = country.Max_Child_No,
                                    Max_Adult_No = country.Max_Adult_No,
+                                   InsertedOn=country.InsertedOn,
+                                   InsertedBy= country.InsertedBy,
+                                   IsActive=country.IsActive,
+                                   IsDelete =country.IsDelete
 
                 });
 

@@ -47,6 +47,10 @@ namespace BusinessService.Service
                     Max_Child_No=RoomTypeEntity.Max_Child_No,
                     RoomStatusId=RoomTypeEntity.RoomStatusId,
                     RoomName=RoomTypeEntity.RoomName,
+                    InsertedOn=RoomTypeEntity.InsertedOn,
+                    InsertedBy=RoomTypeEntity.InsertedBy,
+                    IsActive=RoomTypeEntity.IsActive,
+                    IsDelete=RoomTypeEntity.IsDelete
                     
 
                 };
