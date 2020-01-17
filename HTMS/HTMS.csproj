@@ -3211,7 +3211,6 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.binder.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.autocomplete.min.js.map" />
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
-    <Content Include="Views\Shared\_RibbonMenu.cshtml" />
     <Content Include="Views\RoomType\RoomTypeWindow.cshtml" />
     <Content Include="Views\Shared\_partialAddRoomType.cshtml" />
   </ItemGroup>

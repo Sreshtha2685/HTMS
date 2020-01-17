@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Microsoft.AspNetCore.Http;
+using System.Data.Entity;
 
 namespace BusinessService.Service
 {
@@ -101,34 +103,31 @@ namespace BusinessService.Service
             return null;
         }
 
-        public RoomType UpdateRoomType(int Id, RoomType RoomTypeEntity)
+        public RoomType UpdateRoomType(int id, RoomType RoomTypeEntity)
         {
-            RoomType roomtype = null;
+            RoomType Room = null;
             if (RoomTypeEntity != null)
             {
                 using (var scope = new TransactionScope())
                 {
-                    roomtype = _unitOfWork.RoomTypeRepository.GetByID(Id);
-                    if (roomtype != null)
+                    Room = _unitOfWork.RoomTypeRepository.GetByID(id);
+                    if (Room != null)
                     {
-                        roomtype.id = RoomTypeEntity.id;
-                        roomtype.RoomName = RoomTypeEntity.RoomName;
-                        roomtype.Description = RoomTypeEntity.Description;
-                        roomtype.Max_Adult_No= RoomTypeEntity.Max_Adult_No;
-                        roomtype.Max_Child_No = RoomTypeEntity.Max_Child_No;
-                        roomtype.RoomStatusId = RoomTypeEntity.RoomStatusId;
-                        roomtype.Code = RoomTypeEntity.Code;
-                        roomtype.BedId = RoomTypeEntity.BedId;
-
-
-
-                        _unitOfWork.RoomTypeRepository.Update(roomtype);
+                        Room.id = RoomTypeEntity.id;
+                        Room.BedId = RoomTypeEntity.BedId;
+                        Room.RoomName= RoomTypeEntity.RoomName;
+                        Room.Max_Adult_No = RoomTypeEntity.Max_Adult_No;
+                        Room.Max_Child_No = RoomTypeEntity.Max_Child_No;
+                        Room.Description = RoomTypeEntity.Description;
+                        _unitOfWork.RoomTypeRepository.Update(Room);
                         _unitOfWork.Save();
                         scope.Complete();
                     }
                 }
             }
-            return roomtype;
+            return Room;
         }
+
+
     }
 }

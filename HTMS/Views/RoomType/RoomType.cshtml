@@ -189,7 +189,7 @@
                                       .HtmlAttributes(new { type = "button", @class = "btn btn-primary", style = "height:35px;width:70px;" })
                                       .Events(e => e.Click("btnSave_Click"))
                     )*@
-                    <button id="btnSave" class="k-primary">Save</button>
+                    <button id="btnSave" class="k-primary" onclick="btnSave_Click">Save</button>
 
                     @*@(Html.Kendo().Button()
                                        .Name("btnReset")
@@ -210,35 +210,36 @@
         </div>
 
 
-        @*----------------------------script---------------------------------*@
-        @*<script type="text/javascript">
-
-            $("#btnSave").click(function () {
-                alert("hii");
-                debugger;
-              
-                var validator = $('#save-container').kendoValidator().data("kendoValidator");
+        @*======================================================<  Add new Part    >=====================================*@
 
 
-                if (validator.validate()) {
 
 
-                    var prdModel = {
 
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //function will be called on button click having id btnsave
+                $("#btnSave").click(function () {
+                    debugger;
+                   // alert("hii");
+                    debugger;
+                    var RoomTypeModel = {
                         RoomName: $("#txtroomtype").val(),
                         Max_Adult_No: $("#txtadult").val(),
                         Max_Child_No: $("#txtchild").val(),
                         BedId: $("#txtbed").val(),
                         Description: $("#txtroomstatus").val(),
                         RoomStatusId: $("#txtbed").val(),
-
                     }
+
                     var model = {
-                        "obj": prdModel
+                        "roomtype": RoomTypeModel,
+
                     }
                     $.ajax({
                         type: "POST",
-                        url: "/RoomType/AddRoomType",
+                        url: "AddRoomType",
 
                         data: model,
                         dataType: "json",
@@ -267,65 +268,6 @@
                     // closeNav();
                     var grid = $('#grid').data("kendoGrid");
                     grid.dataSource.read();
-                }
-            }
-
-        </script>*@
-
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                //function will be called on button click having id btnsave
-                $("#btnSave").click(function () {
-                    debugger;
-                    alert("hii");
-                    debugger;
-                    var RoomTypeModel = {
-                        RoomName: $("#txtroomtype").val(),
-                        Max_Adult_No: $("#txtadult").val(),
-                        Max_Child_No: $("#txtchild").val(),
-                        BedId: $("#txtbed").val(),
-                        Description: $("#txtroomstatus").val(),
-                        RoomStatusId: $("#txtbed").val(),
-                    }
-
-                    var model = {
-                        "roomtype": RoomTypeModel,
-
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url: "/RoomType/AddRoomType",
-
-
-                        //contentType: 'application/json',
-                        data: model,
-                        datatype: 'json',
-                         cache: false,
-                        success: function (data) {
-                            if (data) {
-
-                                debugger;
-
-                                // btnReset_Click();
-                                // location.reload();
-                                alert("RoomType added Successfully");
-                                location.reload();
-                                var grid = $('#grid').data("kendoGrid");
-                                grid.dataSource.read();
-
-                                return true;
-                            }
-                            else
-                                return false;
-                        },
-                        error: function (err) {
-                            alert("fail");
-
-                        }
-
-
-                    });
                 });
             });
 
@@ -361,6 +303,10 @@
             }
         </script>
 
+
+        @*-----------------------------Add function---------------------------------*@
+
+    
 
     </section>
 

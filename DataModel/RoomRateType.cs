@@ -12,22 +12,20 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class RoomRateType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public RoomRateType()
         {
-            this.Cities = new HashSet<City>();
-            this.States = new HashSet<State>();
+            this.RoomRates = new HashSet<RoomRate>();
         }
     
-        public int Id { get; set; }
-        public string CountryName { get; set; }
+        public int id { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> Code { get; set; }
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<City> Cities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<State> States { get; set; }
+        public virtual ICollection<RoomRate> RoomRates { get; set; }
     }
 }

@@ -5,8 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fea331d5c7d547f79f6840b7d5ae2edf" Name="Diagram1">
-        <EntityTypeShape EntityType="HTMModel.Country" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HTMModel.RoomType" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTMModel.Bed" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HTMModel.City" Width="1.5" PointX="5.25" PointY="3.875" />
+        <EntityTypeShape EntityType="HTMModel.Country" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="HTMModel.Floor" Width="1.5" PointX="0.75" PointY="9.125" />
+        <EntityTypeShape EntityType="HTMModel.Hotel" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HTMModel.RoomFacility" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="HTMModel.RoomRate" Width="1.5" PointX="10" PointY="1.625" />
+        <EntityTypeShape EntityType="HTMModel.RoomRateType" Width="1.5" PointX="7.75" PointY="5.875" />
+        <EntityTypeShape EntityType="HTMModel.RoomType" Width="1.5" PointX="7.75" PointY="1" />
+        <EntityTypeShape EntityType="HTMModel.State" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="HTMModel.Status" Width="1.5" PointX="5.75" PointY="8.75" />
+        <AssociationConnector Association="HTMModel.FK_City_Country" />
+        <AssociationConnector Association="HTMModel.FK_City_State" />
+        <AssociationConnector Association="HTMModel.FK_State_Country" />
+        <AssociationConnector Association="HTMModel.FK_RoomFacility_Floor" />
+        <AssociationConnector Association="HTMModel.FK_RoomRate_RoomRateType" />
+        <AssociationConnector Association="HTMModel.FK_RoomRate_RoomType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

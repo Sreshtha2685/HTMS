@@ -12,22 +12,20 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public State()
         {
             this.Cities = new HashSet<City>();
-            this.States = new HashSet<State>();
         }
     
-        public int Id { get; set; }
-        public string CountryName { get; set; }
-        public string Description { get; set; }
+        public int id { get; set; }
+        public int Country_Id { get; set; }
+        public string State_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<City> Cities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<State> States { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

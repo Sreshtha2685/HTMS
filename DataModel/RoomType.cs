@@ -14,6 +14,12 @@ namespace DataModel
     
     public partial class RoomType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RoomType()
+        {
+            this.RoomRates = new HashSet<RoomRate>();
+        }
+    
         public int id { get; set; }
         public string RoomName { get; set; }
         public Nullable<int> Max_Adult_No { get; set; }
@@ -26,5 +32,9 @@ namespace DataModel
         public Nullable<int> InsertedBy { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public Nullable<bool> IsChecked { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomRate> RoomRates { get; set; }
     }
 }

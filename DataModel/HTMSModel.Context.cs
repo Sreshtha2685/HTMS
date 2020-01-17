@@ -25,7 +25,16 @@ namespace DataModel
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Bed> Beds { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Floor> Floors { get; set; }
+        public virtual DbSet<Hotel> Hotels { get; set; }
+        public virtual DbSet<RoomFacility> RoomFacilities { get; set; }
+        public virtual DbSet<RoomRate> RoomRates { get; set; }
+        public virtual DbSet<RoomRateType> RoomRateTypes { get; set; }
         public virtual DbSet<RoomType> RoomTypes { get; set; }
+        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
     }
 }

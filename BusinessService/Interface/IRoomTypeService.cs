@@ -12,6 +12,8 @@ namespace BusinessService.Interface
         RoomType GetRoomTypeById(int Id);
         IEnumerable<RoomType> GetAllRoomType();
         RoomType CreateRoomType(RoomType RoomTypeEntity);
+        //  RoomTypes UpdateRoomType(int Id, RoomTypes RoomTypeEntity);
+
         RoomType UpdateRoomType(int Id, RoomType RoomTypeEntity);
         bool DeleteRoomType(int Id);
     }

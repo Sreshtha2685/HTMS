@@ -4,7 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HTMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HTMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bed_Number" Type="int" />
+          <Property Name="Bed_Code" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="State_Id" Type="int" Nullable="false" />
+          <Property Name="Country_Id" Type="int" Nullable="false" />
+          <Property Name="City_Name" Type="varchar" MaxLength="1" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,6 +30,52 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="CountryName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Floor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Floor_Number" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hotel_Number" Type="int" />
+          <Property Name="Hotel_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="RoomFacility">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="facilities" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="int" />
+          <Property Name="floorId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="RoomRate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rate_Name" Type="varchar" MaxLength="50" />
+          <Property Name="room_TypeId" Type="int" Nullable="false" />
+          <Property Name="room_Rate_TypeId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="RoomRateType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Code" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="RoomType">
           <Key>
@@ -29,16 +93,194 @@
           <Property Name="InsertedBy" Type="int" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsChecked" Type="bit" />
         </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country_Id" Type="int" Nullable="false" />
+          <Property Name="State_Name" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="FK_City_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="Country_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="State_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomFacility_Floor">
+          <End Role="Floor" Type="Self.Floor" Multiplicity="1" />
+          <End Role="RoomFacility" Type="Self.RoomFacility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Floor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoomFacility">
+              <PropertyRef Name="floorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomRate_RoomRateType">
+          <End Role="RoomRateType" Type="Self.RoomRateType" Multiplicity="1" />
+          <End Role="RoomRate" Type="Self.RoomRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomRateType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoomRate">
+              <PropertyRef Name="room_Rate_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomRate_RoomType">
+          <End Role="RoomType" Type="Self.RoomType" Multiplicity="1" />
+          <End Role="RoomRate" Type="Self.RoomRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoomRate">
+              <PropertyRef Name="room_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="Country_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HTMModelStoreContainer">
+          <EntitySet Name="Bed" EntityType="Self.Bed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Floor" EntityType="Self.Floor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomFacility" EntityType="Self.RoomFacility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomRate" EntityType="Self.RoomRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomRateType" EntityType="Self.RoomRateType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomType" EntityType="Self.RoomType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_City_Country" Association="Self.FK_City_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomFacility_Floor" Association="Self.FK_RoomFacility_Floor">
+            <End Role="Floor" EntitySet="Floor" />
+            <End Role="RoomFacility" EntitySet="RoomFacility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomRate_RoomRateType" Association="Self.FK_RoomRate_RoomRateType">
+            <End Role="RoomRateType" EntitySet="RoomRateType" />
+            <End Role="RoomRate" EntitySet="RoomRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomRate_RoomType" Association="Self.FK_RoomRate_RoomType">
+            <End Role="RoomType" EntitySet="RoomType" />
+            <End Role="RoomRate" EntitySet="RoomRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="State" EntitySet="State" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HTMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HTMEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Beds" EntityType="HTMModel.Bed" />
+          <EntitySet Name="Cities" EntityType="HTMModel.City" />
+          <EntitySet Name="Countries" EntityType="HTMModel.Country" />
+          <EntitySet Name="Floors" EntityType="HTMModel.Floor" />
+          <EntitySet Name="Hotels" EntityType="HTMModel.Hotel" />
+          <EntitySet Name="RoomFacilities" EntityType="HTMModel.RoomFacility" />
+          <EntitySet Name="RoomRates" EntityType="HTMModel.RoomRate" />
+          <EntitySet Name="RoomRateTypes" EntityType="HTMModel.RoomRateType" />
+          <EntitySet Name="RoomTypes" EntityType="HTMModel.RoomType" />
+          <EntitySet Name="States" EntityType="HTMModel.State" />
+          <EntitySet Name="Status" EntityType="HTMModel.Status" />
+          <AssociationSet Name="FK_City_Country" Association="HTMModel.FK_City_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_State" Association="HTMModel.FK_City_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Country" Association="HTMModel.FK_State_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomFacility_Floor" Association="HTMModel.FK_RoomFacility_Floor">
+            <End Role="Floor" EntitySet="Floors" />
+            <End Role="RoomFacility" EntitySet="RoomFacilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomRate_RoomRateType" Association="HTMModel.FK_RoomRate_RoomRateType">
+            <End Role="RoomRateType" EntitySet="RoomRateTypes" />
+            <End Role="RoomRate" EntitySet="RoomRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomRate_RoomType" Association="HTMModel.FK_RoomRate_RoomType">
+            <End Role="RoomType" EntitySet="RoomTypes" />
+            <End Role="RoomRate" EntitySet="RoomRates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bed_Number" Type="Int32" />
+          <Property Name="Bed_Code" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State_Id" Type="Int32" Nullable="false" />
+          <Property Name="Country_Id" Type="Int32" Nullable="false" />
+          <Property Name="City_Name" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Country" Relationship="HTMModel.FK_City_Country" FromRole="City" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="HTMModel.FK_City_State" FromRole="City" ToRole="State" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
@@ -46,6 +288,59 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cities" Relationship="HTMModel.FK_City_Country" FromRole="Country" ToRole="City" />
+          <NavigationProperty Name="States" Relationship="HTMModel.FK_State_Country" FromRole="Country" ToRole="State" />
+        </EntityType>
+        <EntityType Name="Floor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Floor_Number" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RoomFacilities" Relationship="HTMModel.FK_RoomFacility_Floor" FromRole="Floor" ToRole="RoomFacility" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hotel_Number" Type="Int32" />
+          <Property Name="Hotel_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RoomFacility">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="facilities" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="floorId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Floor" Relationship="HTMModel.FK_RoomFacility_Floor" FromRole="RoomFacility" ToRole="Floor" />
+        </EntityType>
+        <EntityType Name="RoomRate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rate_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="room_TypeId" Type="Int32" Nullable="false" />
+          <Property Name="room_Rate_TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RoomRateType" Relationship="HTMModel.FK_RoomRate_RoomRateType" FromRole="RoomRate" ToRole="RoomRateType" />
+          <NavigationProperty Name="RoomType" Relationship="HTMModel.FK_RoomRate_RoomType" FromRole="RoomRate" ToRole="RoomType" />
+        </EntityType>
+        <EntityType Name="RoomRateType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RoomRates" Relationship="HTMModel.FK_RoomRate_RoomRateType" FromRole="RoomRateType" ToRole="RoomRate" />
         </EntityType>
         <EntityType Name="RoomType">
           <Key>
@@ -63,41 +358,219 @@
           <Property Name="InsertedBy" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <NavigationProperty Name="RoomRates" Relationship="HTMModel.FK_RoomRate_RoomType" FromRole="RoomType" ToRole="RoomRate" />
         </EntityType>
-        <EntityContainer Name="HTMEntities3" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Countries" EntityType="Self.Country" />
-          <EntitySet Name="RoomTypes" EntityType="Self.RoomType" />
-        </EntityContainer>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country_Id" Type="Int32" Nullable="false" />
+          <Property Name="State_Name" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cities" Relationship="HTMModel.FK_City_State" FromRole="State" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="HTMModel.FK_State_Country" FromRole="State" ToRole="Country" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_City_Country">
+          <End Type="HTMModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="HTMModel.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="Country_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_State">
+          <End Type="HTMModel.State" Role="State" Multiplicity="1" />
+          <End Type="HTMModel.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="State_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Country">
+          <End Type="HTMModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="HTMModel.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="Country_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomFacility_Floor">
+          <End Type="HTMModel.Floor" Role="Floor" Multiplicity="1" />
+          <End Type="HTMModel.RoomFacility" Role="RoomFacility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Floor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoomFacility">
+              <PropertyRef Name="floorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomRate_RoomRateType">
+          <End Type="HTMModel.RoomRateType" Role="RoomRateType" Multiplicity="1" />
+          <End Type="HTMModel.RoomRate" Role="RoomRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomRateType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoomRate">
+              <PropertyRef Name="room_Rate_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomRate_RoomType">
+          <End Type="HTMModel.RoomType" Role="RoomType" Multiplicity="1" />
+          <End Type="HTMModel.RoomRate" Role="RoomRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RoomRate">
+              <PropertyRef Name="room_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HTMModelStoreContainer" CdmEntityContainer="HTMEntities3">
+          <EntitySetMapping Name="Beds">
+            <EntityTypeMapping TypeName="HTMModel.Bed">
+              <MappingFragment StoreEntitySet="Bed">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Bed_Code" ColumnName="Bed_Code" />
+                <ScalarProperty Name="Bed_Number" ColumnName="Bed_Number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="HTMModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="City_Name" ColumnName="City_Name" />
+                <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+                <ScalarProperty Name="State_Id" ColumnName="State_Id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="HTMModel.Country">
               <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Floors">
+            <EntityTypeMapping TypeName="HTMModel.Floor">
+              <MappingFragment StoreEntitySet="Floor">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Floor_Number" ColumnName="Floor_Number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="HTMModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotel">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Hotel_Name" ColumnName="Hotel_Name" />
+                <ScalarProperty Name="Hotel_Number" ColumnName="Hotel_Number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomFacilities">
+            <EntityTypeMapping TypeName="HTMModel.RoomFacility">
+              <MappingFragment StoreEntitySet="RoomFacility">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="floorId" ColumnName="floorId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="facilities" ColumnName="facilities" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomRates">
+            <EntityTypeMapping TypeName="HTMModel.RoomRate">
+              <MappingFragment StoreEntitySet="RoomRate">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="room_Rate_TypeId" ColumnName="room_Rate_TypeId" />
+                <ScalarProperty Name="room_TypeId" ColumnName="room_TypeId" />
+                <ScalarProperty Name="Rate_Name" ColumnName="Rate_Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomRateTypes">
+            <EntityTypeMapping TypeName="HTMModel.RoomRateType">
+              <MappingFragment StoreEntitySet="RoomRateType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoomTypes">
             <EntityTypeMapping TypeName="HTMModel.RoomType">
               <MappingFragment StoreEntitySet="RoomType">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
-                <ScalarProperty Name="Max_Adult_No" ColumnName="Max_Adult_No" />
-                <ScalarProperty Name="Max_Child_No" ColumnName="Max_Child_No" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="BedId" ColumnName="BedId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RoomStatusId" ColumnName="RoomStatusId" />
-                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
-                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="RoomStatusId" ColumnName="RoomStatusId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BedId" ColumnName="BedId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Max_Child_No" ColumnName="Max_Child_No" />
+                <ScalarProperty Name="Max_Adult_No" ColumnName="Max_Adult_No" />
+                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="HTMModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="State_Name" ColumnName="State_Name" />
+                <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="HTMModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

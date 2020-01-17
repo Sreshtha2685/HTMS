@@ -1,4 +1,6 @@
 ﻿
+
+using BusinessService.Service;
 using DataModel;
 using HTMS.Models;
 using Kendo.Mvc.Extensions;
@@ -25,7 +27,7 @@ namespace HTMS.Controllers
     public class RoomTypeController : Controller
     {
         HttpClient client = new HttpClient();
-      RoomType roomtype = null;
+         RoomType roomtype = null;
         public List<RoomType> LstAllRoomType = new List<RoomType>();
         private readonly RestClient _client = new RestClient();
         private readonly string _url = ConfigurationManager.AppSettings["url"];
@@ -117,7 +119,7 @@ namespace HTMS.Controllers
                              select new RoomTypes
                              {
                                  id = a.id,
-                                 RoomTypeName = a.RoomName,
+                                 RoomName = a.RoomName,
                                  BedId = a.BedId,
                                  RoomStatusId = a.RoomStatusId,
                                  Max_Adult_No = a.Max_Adult_No,
@@ -168,6 +170,8 @@ namespace HTMS.Controllers
         [HttpPost]
         public ActionResult AddRoomType(RoomType obj)
         {
+
+
             obj.InsertedBy = 1;
             obj.InsertedOn = DateTime.Now;
             obj.IsActive = true;
@@ -187,7 +191,79 @@ namespace HTMS.Controllers
         }
 
 
+        [AcceptVerbs("Post")]
+        public ActionResult EditingPopup_Update(RoomType room)
+        {
+            try
+            {
+                string result = "fail";
+                var ss = GetAllRoomType().ToList().Where(a => a.id == room.id).FirstOrDefault();
+                if (ss != null)
+                {
+                    room.InsertedBy = ss.InsertedBy;
+                    room.InsertedOn = ss.InsertedOn;
+                    room.IsActive = true;
+                    room.IsDelete = false;
+                    var res = new RestRequest("api/RoomType/" + room.id, Method.PUT) { RequestFormat = DataFormat.Json };
+                    res.AddJsonBody(room);
+                    var response = _client.Execute<List<RoomType>>(res);
 
+                    if (response.Data == null)
+                        throw new Exception(response.ErrorMessage);
+                    return Json(new { result = "RoomType", res = "" }, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    room.InsertedBy = ss.InsertedBy;
+                    room.InsertedOn = ss.InsertedOn;
+                    room.IsActive = true;
+                    room.IsDelete = false;
+
+                    HttpResponseMessage clientRequest = client.PutAsJsonAsync("api/RoomType/" + ss.id, room).Result;
+                    if (clientRequest.IsSuccessStatusCode)
+                    {
+                        return Json("OK", JsonRequestBehavior.AllowGet);
+                    }
+                    //throw new Exception(response.ErrorMessage);
+                    return Json(new { result = "RoomType", res = "" }, JsonRequestBehavior.AllowGet);
+
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult DeleteRoomType(int Id)
+        {
+            try
+            {
+                HttpResponseMessage UserBrandInformation = client.GetAsync("api/RoomType/").Result;
+
+                if (UserBrandInformation.IsSuccessStatusCode)
+                {
+                    int lid = Id;
+                    LstAllRoomType = UserBrandInformation.Content.ReadAsAsync<List<RoomType>>().Result;
+                    RoomType roomType = LstAllRoomType.Where(x => x.id== lid).FirstOrDefault();
+                    roomType.IsActive = false;
+                    roomType.IsDelete = true;
+                    HttpResponseMessage response = client.PutAsJsonAsync("api/RoomType/" + lid, roomType).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                    }
+                }
+                return RedirectToAction("GetAllRoomType", "RoomType");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+
+        }
         //public JsonResult AddRoomType(string RoomName)
         //{
         //    RoomTypes person = new RoomTypes
