@@ -9,6 +9,7 @@ namespace BusinessService.Interface
 {
   public  interface IRoomTypeService
     {
+        
         RoomType GetRoomTypeById(int Id);
         IEnumerable<RoomType> GetAllRoomType();
         RoomType CreateRoomType(RoomType RoomTypeEntity);
