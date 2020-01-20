@@ -237,31 +237,28 @@ namespace HTMS.Controllers
             }
         }
 
-        public ActionResult DeleteRoomType(int Id)
+        public JsonResult DeleteRoomType(string[] id)
         {
-            try
-            {
-                HttpResponseMessage UserBrandInformation = client.GetAsync("api/RoomType/").Result;
 
-                if (UserBrandInformation.IsSuccessStatusCode)
+            //for (int i = 0; i < id.Length; i++)
+            //{
+            int i = 0;
+            while (i < id.Length)
+            {
+
+
+                HttpResponseMessage clientRequest = client.DeleteAsync("api/RoomType/" + Convert.ToInt32(id[i])).Result;
+                if (clientRequest.IsSuccessStatusCode)
                 {
-                    int lid = Id;
-                    LstAllRoomType = UserBrandInformation.Content.ReadAsAsync<List<RoomType>>().Result;
-                    RoomType roomType = LstAllRoomType.Where(x => x.id== lid).FirstOrDefault();
-                    roomType.IsActive = false;
-                    roomType.IsDelete = true;
-                    HttpResponseMessage response = client.PutAsJsonAsync("api/RoomType/" + lid, roomType).Result;
-                    if (response.IsSuccessStatusCode)
-                    {
 
-                    }
+                    i++;
                 }
-                return RedirectToAction("GetAllRoomType", "RoomType");
+                else
+                {
+                    return null;
+                }
             }
-            catch (Exception ex)
-            {
-                return Json(ex.Message);
-            }
+            return Json("OK", JsonRequestBehavior.AllowGet);
 
         }
         //public JsonResult AddRoomType(string RoomName)

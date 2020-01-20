@@ -30,6 +30,11 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="CountryName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="InsertedBy" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsChecked" Type="bit" />
         </EntityType>
         <EntityType Name="Floor">
           <Key>
@@ -288,6 +293,11 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="InsertedBy" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsChecked" Type="Boolean" />
           <NavigationProperty Name="Cities" Relationship="HTMModel.FK_City_Country" FromRole="Country" ToRole="City" />
           <NavigationProperty Name="States" Relationship="HTMModel.FK_State_Country" FromRole="Country" ToRole="State" />
         </EntityType>
@@ -451,7 +461,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -480,6 +490,11 @@
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="HTMModel.Country">
               <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

@@ -25,6 +25,7 @@ namespace DataModel.UnitOfWork
         // ---------------------------HTMS------------------------------------------------
         private GenericRepository<Country> _CountryRepository;
         private GenericRepository<RoomType> _RoomTypeRepository;
+        private GenericRepository<State> _StateRepository;
 
 
 
@@ -59,6 +60,15 @@ namespace DataModel.UnitOfWork
                 if (this._RoomTypeRepository == null)
                     this._RoomTypeRepository = new GenericRepository<RoomType>(_context);
                 return _RoomTypeRepository;
+            }
+        }
+        public GenericRepository<State> StateRepository
+        {
+            get
+            {
+                if (this._StateRepository == null)
+                    this._StateRepository = new GenericRepository<State>(_context);
+                return _StateRepository;
             }
         }
 

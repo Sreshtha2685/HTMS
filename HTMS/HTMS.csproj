@@ -3213,6 +3213,7 @@
     <Content Include="Scripts\kendo\2014.1.318\jquery.min.map" />
     <Content Include="Views\RoomType\RoomTypeWindow.cshtml" />
     <Content Include="Views\Shared\_partialAddRoomType.cshtml" />
+    <Content Include="Views\Shared\_partialAddCountry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

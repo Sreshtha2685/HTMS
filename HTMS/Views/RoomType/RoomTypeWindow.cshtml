@@ -8,7 +8,12 @@
 }
 
 <style>
-
+    .k-button k-button-icontext k-grid-edit, k-button k-button-icontext k-grid-delete {
+        background-color: burlywood;
+    }
+    .k-window-content k-content{
+        overflow:auto;
+    }
     #grid1 {
         margin-top: 35px;
         margin-left: 66px;
@@ -23,7 +28,7 @@
     element.style {
     }
 
-    .k-button.k-button-icontext .k-icon, .k-button.k-button-icontext .k-image {
+    a.k-button.k-button-icontext .k-icon, a.k-button.k-button-icontext .k-image {
         vertical-align: text-top;
     }
 </style>
@@ -116,13 +121,13 @@
                 </span>
 
             </div>
-            <div class="col-sm-6 hdrRight" style="margin-left: 964px;
+            @*<div class="col-sm-6 hdrRight" style="margin-left: 964px;
     margin-top: -28px;">
                 <input type="text" id="textboxIconRight" placeholder="Search by Category/Name/Company" title="Type in a name" class="serach_bar hdrfield">
                 <span class="km-icon km-search" onclick="onSearch()"></span>
 
                 <span class="km-icon km-search"></span>
-            </div>
+            </div*@>
 
         </div>
 
@@ -143,17 +148,19 @@
                     //columns.Select().Width(30);
                     //columns.Bound(p => p.id).Hidden();
                     columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
-                    columns.Bound(p => p.RoomName).Width(80).Title("RoomName");
+                    columns.Bound(p => p.RoomName).Width(80).Title("RoomName").Width("30");
                     columns.Bound(p => p.Max_Adult_No).Width(80).Title("Max_Adult_No");
                     columns.Bound(p => p.Max_Child_No).Width(80).Title("Max_Child_No");
+                    columns.Bound(p => p.BedId).Width(80).Title("BedId");
+                    columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
                     // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
-                    columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions");
+                    columns.Command(command => { command.Edit(); command.Destroy();}).Title("Actions").Width("30");
 
-    })
+                })
             .Editable(editable => editable.Mode(GridEditMode.PopUp))
              .Pageable()
             .Sortable()
-           // .Events(ev => ev.Change("onChange"))
+            // .Events(ev => ev.Change("onChange"))
             // .PersistSelection()
             .DataSource(dataSource => dataSource
                 .Ajax()
@@ -197,7 +204,7 @@
 
 <div class="col-md-12">
     @(Html.Kendo().Window().Name("AddDetails")
-                                                                        .Title("ADD ")
+                                                        .Title("Add RoomType ")
                                                         .Visible(false)
                                                         .Modal(true)
                                                         .Content(@<text>
@@ -205,10 +212,9 @@
                                                                 @Html.Partial("_partialAddRoomType")
                                                             </div>
                                                         </text>)
-                                                                                                                                                .Draggable()
-                                                                                                                                                .Width(664)
-                                                                                                                                                .Height(465)
-                                                                                                                                                .Actions(actions => actions.Close())
+                                                   
+                                                   
+                                                    .Actions(actions => actions.Close())
 
     )
 </div>
