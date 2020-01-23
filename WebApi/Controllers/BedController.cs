@@ -1,6 +1,6 @@
-﻿using DataModel;
-using BusinessService.Interface;
+﻿using BusinessService.Interface;
 using BusinessService.Service;
+using DataModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,25 +13,26 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class CountryController : ApiController
+    public class BedController : ApiController
     {
-        private readonly ICountryService _CountryService;
+        private readonly IBedService _BedService;
         private HTMEntities3 db = new HTMEntities3();
 
-        public CountryController()
+        public BedController()
         {
-            _CountryService = new CountryService();
+            _BedService = new BedService();
         }
         /// <summary>
         /// Retrieves the list of values
         /// </summary>
         /// <returns></returns>
         // GET: api/Country
-        public HttpResponseMessage GetCountry()
+
+        public HttpResponseMessage GetBed()
         {
             try
             {
-                var lst = _CountryService.GetAllCountry();
+                var lst = _BedService.GetAllBed();
                 if (lst != null)
                 {
                     return new HttpResponseMessage()
@@ -41,9 +42,10 @@ namespace WebApi.Controllers
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, lst);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                throw ex;
+                //return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
         }
@@ -54,13 +56,12 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the item to be retrieved</param>
         /// <returns></returns>
-        
-        // GET: api/Country/5
-        public HttpResponseMessage GetCountry(int id)
+        ///   // GET: api/RoomType/5
+        public HttpResponseMessage GetBed(int id)
         {
             try
             {
-                var Temp = _CountryService.GetCountryById(id);
+                var Temp = _BedService.GetBedById(id);
                 if (Temp != null)
                     return Request.CreateResponse(HttpStatusCode.OK, Temp);
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Customer found for this id");
@@ -75,25 +76,27 @@ namespace WebApi.Controllers
         /// Insert a new value in the list
         /// </summary>
         /// <param name=<em>"value"</em>>New value to be inserted</param>
-        // POST: api/Country
+        // POST: api/Bed
 
 
-        public IHttpActionResult Post(CountryModel country)
+        public IHttpActionResult Post(BedModel country)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Not a valid model");
 
             using (var ctx = new HTMEntities3())
             {
-                ctx.Countries.Add(new Country()
+                ctx.Beds.Add(new Bed()
                 {
-                    Id = country.Id,
-                    CountryName = country.CountryName,
+                    id = country.id,
+                    Bed_Code = country.BedCode,
                     Description = country.Description,
-                    InsertedBy = country.InsertedBy,
-                    InsertedOn = country.InsertedOn,
-                    IsActive = country.IsActive,
-                    IsDelete = country.IsDelete
+                    Bed_Number = country.BedNumber,
+                    
+                    //InsertedOn = country.InsertedOn,
+                    //InsertedBy = country.InsertedBy,
+                    //IsActive = country.IsActive,
+                    //IsDelete = country.IsDelete
 
                 });
 
@@ -102,22 +105,6 @@ namespace WebApi.Controllers
 
             return Ok();
         }
-        //public HttpResponseMessage Post([FromBody]Country obj)
-        //{
-        //    try
-        //    {
-
-        //        var res = _CountryService.CreateCountry(obj);
-        //        if (res != null)
-        //            return Request.CreateResponse(res.Id);
-        //        else
-        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data Not Saved");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-        //    }
-        //}
 
 
         /// <summary>
@@ -125,15 +112,15 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the value to be changed</param>
         /// <param name=<em>"value"</em>>The new value</param>
-        // PUT: api/Country/5
-        public HttpResponseMessage Put(int id, [FromBody]Country obj)
+        // PUT: api/Bed/5
+        public HttpResponseMessage Put(int id, [FromBody]Bed obj)
         {
             try
             {
-                Country res = null;
+                Bed res = null;
                 if (id >= 0)
                 {
-                    res = _CountryService.UpdateCountry(id, obj);
+                    res = _BedService.UpdateBed(id, obj);
                 }
                 if (res != null)
                     return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -148,15 +135,16 @@ namespace WebApi.Controllers
         }
 
 
+
         /// <summary>
         /// Delete an item from the list
         /// </summary>
         /// <param name=<em>"id"</em>>id of the item to be deleted</param>
-        // DELETE: api/Country/5
+        // DELETE: api/Bed/5
         public bool Delete(int id)
         {
             if (id >= 0)
-                return _CountryService.DeleteCountry(id);
+                return _BedService.DeleteBed(id);
             return false;
         }
     }

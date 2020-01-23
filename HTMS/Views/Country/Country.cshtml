@@ -47,14 +47,14 @@
         vertical-align: text-top;
     }
 </style>
-<link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
+@*<link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
 <link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/kendo/kendo.web.min.js"></script>
 <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
-<script src="~/Scripts/kendo/kendo.all.min.js"></script>
+<script src="~/Scripts/kendo/kendo.all.min.js"></script>*@
 
 
 
@@ -97,7 +97,7 @@
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                <span class="grid_head" id="btn_new" style="margin-left:-10px;">&#43; Add Country</span>
+                <span class="grid_head" id="btn_new" style="margin-left:45px;">&#43; Add Country</span>
                 <span class="grid_head">
                     <span id="hdrDropdown">
                         @( Html.Kendo().DropDownList()
@@ -157,7 +157,7 @@
 
 @********************************Grid************************************@
 <div class="row" id="chkBoxGrid" style=" margin-top:6px;
-            margin-left: 73px;">
+            margin-left: 141px;">
     @(Html.Kendo().Grid<HTMS.Models.CountryModel>()
                                     .Name("grid")
                                     .Columns(columns =>
@@ -165,7 +165,7 @@
 
                                         columns.Bound(p => p.CountryName).Width(80).Title("RoomName").Width("30");
 
-                                        columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+                                       // columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
 
                                         columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
@@ -177,7 +177,7 @@
                                 // .PersistSelection()
                                 .DataSource(dataSource => dataSource
                                     .Ajax()
-                                    .Model(model => model.Id(p => p.Id))
+                                    .Model(model => model.Id(p => p.CountryName))
                                     .Read(read => read.Action("BindAllCountry", "Country"))
                                     .Update(update => update.Action("EditingPopup_Update", "Country"))
                                     .Destroy(update => update.Action("DeleteCountry", "Country"))

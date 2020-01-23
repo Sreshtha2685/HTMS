@@ -1,6 +1,6 @@
 ﻿@using Kendo.Mvc.UI;
 @{
-    ViewBag.Title = "_partialAddRoomType";
+    ViewBag.Title = "_partialAddBed";
     Layout = null;
 }
 
@@ -27,86 +27,30 @@
         <div class="col-lg-12">
 
             <div class="col-lg-6">
-                @Html.Label("RoomType:", htmlAttributes: new { @class = "control-label", required = "required",})
+                @Html.Label("BedNo:", htmlAttributes: new { @class = "control-label", required = "required",})
                 <span class="required" style="color:red">*</span>
             </div>
 
             <div class="col-lg-6" style="margin-left:-64px;margin-top:10px">
-                <input type="text" id="txtroomtype" value="" style="width:221px;height: 23px;border-radius: 4px;">
+                <input type="text" id="txtBedNo" value="" style="width:221px;height: 23px;border-radius: 4px;">
 
             </div>
         </div>
         <div class="clearfix" style="padding-bottom: 10px;"></div>
-        <div class="col-lg-12">
+        @*<div class="col-lg-12">
             <div class="col-lg-6" style="margin-top:-4px">
-                @Html.Label("Max_Adult No:", htmlAttributes: new { @class = "control-label", })
+                @Html.Label("Bed Code:", htmlAttributes: new { @class = "control-label", })
                 <span class="required" style="color:red">*</span>
             </div>
 
             <div class="col-lg-6" style="margin-left:-63px">
 
-                <input type="number" id="txtadult" name="quantity" min="1" max="4" style="width:221px;height: 23px;border-radius: 4px;">
+                <input type="number" id="txtCode" name="quantity" min="1" max="4" style="width:221px;height: 23px;border-radius: 4px;">
             </div>
 
-        </div>
+        </div>*@
 
-        <div class="clearfix" style="padding-bottom: 10px;"></div>
-        <div class="col-lg-12">
-            <div class="col-lg-6">
-                @Html.Label("Max_Child No:", htmlAttributes: new { @class = "control-label", })
-                <span class="required" style="color:red">*</span>
-            </div>
-
-            <div class="col-lg-6" style="margin-left:-63px">
-
-                <input type="number" id="txtchild" name="quantity" min="1" max="2" style="width:221px;height: 23px;border-radius: 4px;">
-            </div>
-
-        </div>
-        <div class="col-lg-12">
-            <div class="col-lg-6" style="margin-top:7px">
-                @Html.Label("Bed No:", htmlAttributes: new { @class = "control-label", })
-                <span class="required" style="color:red">*</span>
-            </div>
-
-            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
-
-                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
-
-                @(Html.Kendo().DropDownList()
-                 .Name("txtbed")
-                 .DataTextField("Bed_Number")
-                 .DataValueField("id")
-                 .DataSource(source =>
-                 {
-                     source.Read(read =>
-                     {
-                         read.Action("Bed_Read", "RoomType");
-                     });
-                 })
-                .HtmlAttributes(new { style = "width:224px" })
-                )
-            </div>
-
-        </div>
-        <div class="clearfix" style="padding-bottom: 10px;"></div>
-        <div class="col-lg-12">
-            <div class="col-lg-6">
-                @Html.Label("Room Status:", htmlAttributes: new { @class = "control-label", })
-                <span class="required" style="color:red">*</span>
-            </div>
-
-            <div class="col-lg-6" style="margin-left:-63px">
-
-                <select name="RoomStatus" id="txtroomstatus" style="width: 220px;height: 23px;border-radius: 4px;">
-                    <option value="volvo">---Select-----</option>
-                    <option value="volvo">Available</option>
-                    <option value="volvo">Booked</option>
-                    <option value="volvo">Not Available</option>
-                </select>
-            </div>
-
-        </div>
+     
         <div class="col-lg-12">
 
             <div class="col-lg-6" style="margin-top:7px">

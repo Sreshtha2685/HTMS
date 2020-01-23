@@ -20,12 +20,15 @@ namespace DataModel
             this.Cities = new HashSet<City>();
         }
     
-        public int id { get; set; }
-        public int Country_Id { get; set; }
-        public string State_Name { get; set; }
+        public int Id { get; set; }
+        public string StateName { get; set; }
+        public Nullable<int> CityId { get; set; }
+        public Nullable<System.DateTime> InsertedOn { get; set; }
+        public Nullable<int> InsertedBy { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<City> Cities { get; set; }
-        public virtual Country Country { get; set; }
     }
 }

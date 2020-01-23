@@ -18,21 +18,18 @@ namespace DataModel
         public Country()
         {
             this.Cities = new HashSet<City>();
-            this.States = new HashSet<State>();
         }
     
         public int Id { get; set; }
         public string CountryName { get; set; }
         public string Description { get; set; }
+        public Nullable<int> InsertedBy { get; set; }
         public Nullable<System.DateTime> InsertedOn { get; set; }
-        public Nullable<bool> InsertedBy { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<bool> IsChecked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<City> Cities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<State> States { get; set; }
     }
 }

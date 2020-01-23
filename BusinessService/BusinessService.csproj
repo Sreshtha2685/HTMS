@@ -168,11 +168,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Interface\IBedService.cs" />
+    <Compile Include="Interface\ICityService.cs" />
     <Compile Include="Interface\ICountryService.cs" />
     <Compile Include="Interface\IRoomTypeService.cs" />
+    <Compile Include="Interface\IStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BedService.cs" />
+    <Compile Include="Service\CityService.cs" />
     <Compile Include="Service\CountryService.cs" />
     <Compile Include="Service\RoomTypeService.cs" />
+    <Compile Include="Service\StateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessEntity\BusinessEntity.csproj">

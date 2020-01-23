@@ -1,6 +1,6 @@
-﻿using DataModel;
-using BusinessService.Interface;
+﻿using BusinessService.Interface;
 using BusinessService.Service;
+using DataModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,25 +13,25 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class CountryController : ApiController
+    public class CityController : ApiController
     {
-        private readonly ICountryService _CountryService;
+        private readonly ICityService _CityService;
         private HTMEntities3 db = new HTMEntities3();
 
-        public CountryController()
+        public CityController()
         {
-            _CountryService = new CountryService();
+            _CityService = new CityService();
         }
         /// <summary>
         /// Retrieves the list of values
         /// </summary>
         /// <returns></returns>
-        // GET: api/Country
-        public HttpResponseMessage GetCountry()
+        // GET: api/State
+        public HttpResponseMessage GetCity()
         {
             try
             {
-                var lst = _CountryService.GetAllCountry();
+                var lst = _CityService.GetAllCity();
                 if (lst != null)
                 {
                     return new HttpResponseMessage()
@@ -41,26 +41,25 @@ namespace WebApi.Controllers
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, lst);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                throw ex;
+                //return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
         }
-
-
         /// <summary>
         /// Retrieves one value from the list of values
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the item to be retrieved</param>
         /// <returns></returns>
-        
-        // GET: api/Country/5
-        public HttpResponseMessage GetCountry(int id)
+
+        // GET: api/City/5
+        public HttpResponseMessage GetCity(int id)
         {
             try
             {
-                var Temp = _CountryService.GetCountryById(id);
+                var Temp = _CityService.GetCityById(id);
                 if (Temp != null)
                     return Request.CreateResponse(HttpStatusCode.OK, Temp);
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Customer found for this id");
@@ -70,30 +69,27 @@ namespace WebApi.Controllers
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
-
         /// <summary>
         /// Insert a new value in the list
         /// </summary>
         /// <param name=<em>"value"</em>>New value to be inserted</param>
-        // POST: api/Country
-
-
-        public IHttpActionResult Post(CountryModel country)
+        // POST: api/City
+        public IHttpActionResult Post(CityModel city)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Not a valid model");
 
             using (var ctx = new HTMEntities3())
             {
-                ctx.Countries.Add(new Country()
+                ctx.Cities.Add(new City()
                 {
-                    Id = country.Id,
-                    CountryName = country.CountryName,
-                    Description = country.Description,
-                    InsertedBy = country.InsertedBy,
-                    InsertedOn = country.InsertedOn,
-                    IsActive = country.IsActive,
-                    IsDelete = country.IsDelete
+                    Id = city.Id,
+                    StateId = city.StateId,
+                    CountryId = city.CountryId,
+                    InsertedBy = city.InsertedBy,
+                    InsertedOn = city.InsertedOn,
+                    IsActive = city.IsActive,
+                    IsDelete = city.IsDelete
 
                 });
 
@@ -102,38 +98,20 @@ namespace WebApi.Controllers
 
             return Ok();
         }
-        //public HttpResponseMessage Post([FromBody]Country obj)
-        //{
-        //    try
-        //    {
-
-        //        var res = _CountryService.CreateCountry(obj);
-        //        if (res != null)
-        //            return Request.CreateResponse(res.Id);
-        //        else
-        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data Not Saved");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-        //    }
-        //}
-
-
         /// <summary>
         /// Change a single value in the list
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the value to be changed</param>
         /// <param name=<em>"value"</em>>The new value</param>
-        // PUT: api/Country/5
-        public HttpResponseMessage Put(int id, [FromBody]Country obj)
+        // PUT: api/City/5
+        public HttpResponseMessage Put(int id, [FromBody]City obj)
         {
             try
             {
-                Country res = null;
+                City res = null;
                 if (id >= 0)
                 {
-                    res = _CountryService.UpdateCountry(id, obj);
+                    res = _CityService.UpdateCity(id, obj);
                 }
                 if (res != null)
                     return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -152,12 +130,13 @@ namespace WebApi.Controllers
         /// Delete an item from the list
         /// </summary>
         /// <param name=<em>"id"</em>>id of the item to be deleted</param>
-        // DELETE: api/Country/5
+        // DELETE: api/City/5
         public bool Delete(int id)
         {
             if (id >= 0)
-                return _CountryService.DeleteCountry(id);
+                return _CityService.DeleteCity(id);
             return false;
         }
+
     }
 }

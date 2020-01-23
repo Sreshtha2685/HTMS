@@ -44,7 +44,12 @@ namespace BusinessService.Service
                     Id = CountryEntity.Id,
                     CountryName = CountryEntity.CountryName,
                     Description = CountryEntity.Description,
-                  
+                    InsertedOn = CountryEntity.InsertedOn,
+                    InsertedBy = CountryEntity.InsertedBy,
+                    IsActive = CountryEntity.IsActive,
+                    IsChecked=CountryEntity.IsChecked,
+                    IsDelete = CountryEntity.IsDelete,
+                    
                 };
                 _unitOfWork.CountryRepository.Insert(CountryEntity);
                 _unitOfWork.Save();

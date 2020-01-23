@@ -167,6 +167,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoGenerate.cs">
+      <DependentUpon>HTMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Bed.cs">
       <DependentUpon>HTMSModel.tt</DependentUpon>
     </Compile>

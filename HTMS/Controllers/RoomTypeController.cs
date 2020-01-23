@@ -126,7 +126,7 @@ namespace HTMS.Controllers
                                  Description = a.Description,
                                  Max_Child_No = a.Max_Child_No
 
-                             }).OrderByDescending(x => x.id).ToList();
+                             }).ToList();
 
 
                 if (query.Count > 0)
@@ -261,6 +261,51 @@ namespace HTMS.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
 
         }
+
+
+        public List<Bed> GetAllBedData()
+        {
+
+
+            HttpResponseMessage res = client.GetAsync("api/Bed/").Result;
+            if (res.IsSuccessStatusCode)
+            {
+                var bed = res.Content.ReadAsAsync<List<Bed>>().Result.ToList();
+                return bed;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public ActionResult Bed_Read([DataSourceRequest] DataSourceRequest req)
+        {
+            try
+            {
+                var data = GetAllBedData().ToList();
+                var query = (from a in data
+                             select new
+                             {
+                                 a.id,
+                                 a.Bed_Number,
+
+                             }).ToList();
+
+                if (query.Count > 0)
+                {
+                    return Json(query, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
         //public JsonResult AddRoomType(string RoomName)
         //{
         //    RoomTypes person = new RoomTypes

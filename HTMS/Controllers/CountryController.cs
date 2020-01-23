@@ -103,12 +103,12 @@ namespace HTMS.Controllers
                 var query = (from a in data
                              select new CountryModel
                              {
-                                 Id = a.Id,
+                               //  Id = a.Id,
                                  CountryName = a.CountryName,
                                  Description = a.Description,
 
 
-                             }).OrderByDescending(x => x.Id).ToList();
+                             }).ToList();
 
 
                 if (query.Count > 0)
@@ -154,7 +154,7 @@ namespace HTMS.Controllers
         {
 
 
-            obj.InsertedBy = true;
+            obj.InsertedBy = 1;
             obj.InsertedOn = DateTime.Now;
             obj.IsActive = true;
             obj.IsDelete = false;

@@ -226,14 +226,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BedController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
+    <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AutoGenerate.cs" />
+    <Compile Include="Models\BedModel.cs" />
+    <Compile Include="Models\CityModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\RoomTypes.cs" />
+    <Compile Include="Models\StateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3214,6 +3221,12 @@
     <Content Include="Views\RoomType\RoomTypeWindow.cshtml" />
     <Content Include="Views\Shared\_partialAddRoomType.cshtml" />
     <Content Include="Views\Shared\_partialAddCountry.cshtml" />
+    <Content Include="Views\State\State.cshtml" />
+    <Content Include="Views\Shared\_partialAddState.cshtml" />
+    <Content Include="Views\City\City.cshtml" />
+    <Content Include="Views\Shared\_partialAddCity.cshtml" />
+    <Content Include="Views\Bed\Bed.cshtml" />
+    <Content Include="Views\Shared\_partialAddBed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

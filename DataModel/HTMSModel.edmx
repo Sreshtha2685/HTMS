@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HTMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AutoGenerate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="IdName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="Bed">
           <Key>
             <PropertyRef Name="id" />
@@ -13,25 +20,33 @@
           <Property Name="Bed_Number" Type="int" />
           <Property Name="Bed_Code" Type="int" />
           <Property Name="Description" Type="varchar" MaxLength="150" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="City">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="State_Id" Type="int" Nullable="false" />
-          <Property Name="Country_Id" Type="int" Nullable="false" />
-          <Property Name="City_Name" Type="varchar" MaxLength="1" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CountryName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedBy" Type="int" />
           <Property Name="InsertedOn" Type="date" />
-          <Property Name="InsertedBy" Type="bit" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="IsChecked" Type="bit" />
@@ -102,11 +117,15 @@
         </EntityType>
         <EntityType Name="State">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Country_Id" Type="int" Nullable="false" />
-          <Property Name="State_Name" Type="varchar" MaxLength="1" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -117,26 +136,26 @@
           <Property Name="Description" Type="varchar" MaxLength="150" />
         </EntityType>
         <Association Name="FK_City_Country">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
           <End Role="City" Type="Self.City" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="City">
-              <PropertyRef Name="Country_Id" />
+              <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_City_State">
-          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
           <End Role="City" Type="Self.City" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="City">
-              <PropertyRef Name="State_Id" />
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -176,19 +195,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_State_Country">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="State" Type="Self.State" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="State">
-              <PropertyRef Name="Country_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HTMModelStoreContainer">
+          <EntitySet Name="AutoGenerate" EntityType="Self.AutoGenerate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bed" EntityType="Self.Bed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
@@ -220,16 +228,13 @@
             <End Role="RoomType" EntitySet="RoomType" />
             <End Role="RoomRate" EntitySet="RoomRate" />
           </AssociationSet>
-          <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
-            <End Role="Country" EntitySet="Country" />
-            <End Role="State" EntitySet="State" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HTMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="HTMEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AutoGenerates" EntityType="HTMModel.AutoGenerate" />
           <EntitySet Name="Beds" EntityType="HTMModel.Bed" />
           <EntitySet Name="Cities" EntityType="HTMModel.City" />
           <EntitySet Name="Countries" EntityType="HTMModel.Country" />
@@ -249,10 +254,6 @@
             <End Role="State" EntitySet="States" />
             <End Role="City" EntitySet="Cities" />
           </AssociationSet>
-          <AssociationSet Name="FK_State_Country" Association="HTMModel.FK_State_Country">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="State" EntitySet="States" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoomFacility_Floor" Association="HTMModel.FK_RoomFacility_Floor">
             <End Role="Floor" EntitySet="Floors" />
             <End Role="RoomFacility" EntitySet="RoomFacilities" />
@@ -266,6 +267,13 @@
             <End Role="RoomRate" EntitySet="RoomRates" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AutoGenerate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="IdName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="Bed">
           <Key>
             <PropertyRef Name="id" />
@@ -274,15 +282,23 @@
           <Property Name="Bed_Number" Type="Int32" />
           <Property Name="Bed_Code" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
         </EntityType>
         <EntityType Name="City">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="State_Id" Type="Int32" Nullable="false" />
-          <Property Name="Country_Id" Type="Int32" Nullable="false" />
-          <Property Name="City_Name" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="Country" Relationship="HTMModel.FK_City_Country" FromRole="City" ToRole="Country" />
           <NavigationProperty Name="State" Relationship="HTMModel.FK_City_State" FromRole="City" ToRole="State" />
         </EntityType>
@@ -290,16 +306,15 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedBy" Type="Int32" />
           <Property Name="InsertedOn" Type="DateTime" Precision="0" />
-          <Property Name="InsertedBy" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="IsChecked" Type="Boolean" />
           <NavigationProperty Name="Cities" Relationship="HTMModel.FK_City_Country" FromRole="Country" ToRole="City" />
-          <NavigationProperty Name="States" Relationship="HTMModel.FK_State_Country" FromRole="Country" ToRole="State" />
         </EntityType>
         <EntityType Name="Floor">
           <Key>
@@ -373,13 +388,16 @@
         </EntityType>
         <EntityType Name="State">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Country_Id" Type="Int32" Nullable="false" />
-          <Property Name="State_Name" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="Cities" Relationship="HTMModel.FK_City_State" FromRole="State" ToRole="City" />
-          <NavigationProperty Name="Country" Relationship="HTMModel.FK_State_Country" FromRole="State" ToRole="Country" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -390,38 +408,26 @@
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_City_Country">
-          <End Type="HTMModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="HTMModel.Country" Role="Country" Multiplicity="0..1" />
           <End Type="HTMModel.City" Role="City" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="City">
-              <PropertyRef Name="Country_Id" />
+              <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_City_State">
-          <End Type="HTMModel.State" Role="State" Multiplicity="1" />
+          <End Type="HTMModel.State" Role="State" Multiplicity="0..1" />
           <End Type="HTMModel.City" Role="City" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="City">
-              <PropertyRef Name="State_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_State_Country">
-          <End Type="HTMModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="HTMModel.State" Role="State" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="State">
-              <PropertyRef Name="Country_Id" />
+            <Dependent Role="City">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -467,9 +473,21 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HTMModelStoreContainer" CdmEntityContainer="HTMEntities3">
+          <EntitySetMapping Name="AutoGenerates">
+            <EntityTypeMapping TypeName="HTMModel.AutoGenerate">
+              <MappingFragment StoreEntitySet="AutoGenerate">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdName" ColumnName="IdName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Beds">
             <EntityTypeMapping TypeName="HTMModel.Bed">
               <MappingFragment StoreEntitySet="Bed">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Bed_Code" ColumnName="Bed_Code" />
                 <ScalarProperty Name="Bed_Number" ColumnName="Bed_Number" />
@@ -480,10 +498,14 @@
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="HTMModel.City">
               <MappingFragment StoreEntitySet="City">
-                <ScalarProperty Name="City_Name" ColumnName="City_Name" />
-                <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
-                <ScalarProperty Name="State_Id" ColumnName="State_Id" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -493,8 +515,8 @@
                 <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
                 <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -574,9 +596,13 @@
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="HTMModel.State">
               <MappingFragment StoreEntitySet="State">
-                <ScalarProperty Name="State_Name" ColumnName="State_Name" />
-                <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

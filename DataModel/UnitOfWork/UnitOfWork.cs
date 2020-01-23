@@ -26,7 +26,8 @@ namespace DataModel.UnitOfWork
         private GenericRepository<Country> _CountryRepository;
         private GenericRepository<RoomType> _RoomTypeRepository;
         private GenericRepository<State> _StateRepository;
-
+        private GenericRepository<City> _CityRepository;
+        private GenericRepository<Bed> _BedRepository;
 
 
         #endregion
@@ -62,6 +63,16 @@ namespace DataModel.UnitOfWork
                 return _RoomTypeRepository;
             }
         }
+        public GenericRepository<Bed> BedRepository
+        {
+            get
+            {
+                if (this._BedRepository == null)
+                    this._BedRepository = new GenericRepository<Bed>(_context);
+                return _BedRepository;
+            }
+        }
+
         public GenericRepository<State> StateRepository
         {
             get
@@ -69,6 +80,15 @@ namespace DataModel.UnitOfWork
                 if (this._StateRepository == null)
                     this._StateRepository = new GenericRepository<State>(_context);
                 return _StateRepository;
+            }
+        }
+        public GenericRepository<City> CityRepository
+        {
+            get
+            {
+                if (this._CityRepository == null)
+                    this._CityRepository = new GenericRepository<City>(_context);
+                return _CityRepository;
             }
         }
 

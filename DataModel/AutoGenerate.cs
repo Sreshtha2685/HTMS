@@ -12,18 +12,9 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class City
+    public partial class AutoGenerate
     {
+        public string IdName { get; set; }
         public int Id { get; set; }
-        public string CityName { get; set; }
-        public Nullable<int> StateId { get; set; }
-        public Nullable<int> CountryId { get; set; }
-        public Nullable<System.DateTime> InsertedOn { get; set; }
-        public Nullable<int> InsertedBy { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
-    
-        public virtual Country Country { get; set; }
-        public virtual State State { get; set; }
     }
 }
