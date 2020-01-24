@@ -12,6 +12,7 @@ namespace BusinessService.Service
 {
     public class StateService : IStateService
     {
+        
         private readonly UnitOfWork _unitOfWork;
 
         /// <summary>

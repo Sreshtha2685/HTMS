@@ -106,7 +106,7 @@ namespace HTMS.Controllers
                              join c in data2 on a.CountryId equals c.Id
                              select new CityModel
                              {
-                               //  id = a.Id,
+                                id = a.Id,
                                  CityName = a.CityName,
                                  //StateId = a.StateId,
                                  //CountryId = a.CountryId,

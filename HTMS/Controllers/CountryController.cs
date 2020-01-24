@@ -103,7 +103,7 @@ namespace HTMS.Controllers
                 var query = (from a in data
                              select new CountryModel
                              {
-                               //  Id = a.Id,
+                                Id = a.Id,
                                  CountryName = a.CountryName,
                                  Description = a.Description,
 

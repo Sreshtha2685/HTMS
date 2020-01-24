@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Interface\IHotelService.cs" />
     <Compile Include="Interface\IBedService.cs" />
     <Compile Include="Interface\ICityService.cs" />
     <Compile Include="Interface\ICountryService.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Service\BedService.cs" />
     <Compile Include="Service\CityService.cs" />
     <Compile Include="Service\CountryService.cs" />
+    <Compile Include="Service\HotelService.cs" />
     <Compile Include="Service\RoomTypeService.cs" />
     <Compile Include="Service\StateService.cs" />
   </ItemGroup>

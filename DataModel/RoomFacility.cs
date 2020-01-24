@@ -19,6 +19,10 @@ namespace DataModel
         public Nullable<int> Price { get; set; }
         public int floorId { get; set; }
         public string Description { get; set; }
+        public Nullable<System.DateTime> InsertedOn { get; set; }
+        public Nullable<int> InsertedBy { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     
         public virtual Floor Floor { get; set; }
     }

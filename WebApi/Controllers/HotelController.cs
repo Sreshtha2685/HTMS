@@ -13,26 +13,25 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class BedController : ApiController
+    public class HotelController : ApiController
     {
-        private readonly IBedService _BedService;
+        private readonly IHotelService _HotelService;
         private HTMEntities3 db = new HTMEntities3();
 
-        public BedController()
+        public HotelController()
         {
-            _BedService = new BedService();
+            _HotelService = new HotelService();
         }
         /// <summary>
         /// Retrieves the list of values
         /// </summary>
         /// <returns></returns>
-        // GET: api/Country
-
-        public HttpResponseMessage GetBed()
+        // GET: api/Hotel
+        public HttpResponseMessage GetHotel()
         {
             try
             {
-                var lst = _BedService.GetAllBed();
+                var lst = _HotelService.GetAllHotel();
                 if (lst != null)
                 {
                     return new HttpResponseMessage()
@@ -56,12 +55,13 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the item to be retrieved</param>
         /// <returns></returns>
-        ///   // GET: api/RoomType/5
-        public HttpResponseMessage GetBed(int id)
+
+        // GET: api/Hotel/5
+        public HttpResponseMessage GetHotel(int id)
         {
             try
             {
-                var Temp = _BedService.GetBedById(id);
+                var Temp = _HotelService.GetHotelById(id);
                 if (Temp != null)
                     return Request.CreateResponse(HttpStatusCode.OK, Temp);
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Customer found for this id");
@@ -76,25 +76,22 @@ namespace WebApi.Controllers
         /// Insert a new value in the list
         /// </summary>
         /// <param name=<em>"value"</em>>New value to be inserted</param>
-        // POST: api/Bed
-
-
-        public IHttpActionResult Post(BedModel country)
+        // POST: api/Country
+        public IHttpActionResult Post(HotelModel country)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Not a valid model");
 
             using (var ctx = new HTMEntities3())
             {
-                ctx.Beds.Add(new Bed()
+                ctx.Hotels.Add(new Hotel()
                 {
                     id = country.id,
-                    Bed_Code = country.BedCode,
-                    Description = country.Description,
-                    Bed_Number = country.Bed_Number,
-
-                    InsertedOn = country.InsertedOn,
+                    Hotel_Name = country.Hotel_Name,
+                    Hotel_Number = country.Hotel_Number,
+                    Description =country.Description,
                     InsertedBy = country.InsertedBy,
+                    InsertedOn = country.InsertedOn,
                     IsActive = country.IsActive,
                     IsDelete = country.IsDelete
 
@@ -106,47 +103,45 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-
         /// <summary>
         /// Change a single value in the list
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the value to be changed</param>
         /// <param name=<em>"value"</em>>The new value</param>
-        // PUT: api/Bed/5
-        public HttpResponseMessage Put(int id, [FromBody]Bed obj)
+        // PUT: api/Hotel/5
+        public HttpResponseMessage Put(int id, [FromBody]Hotel obj)
         {
             try
             {
-                Bed res = null;
+                Hotel res = null;
                 if (id >= 0)
                 {
-                    res = _BedService.UpdateBed(id, obj);
+                    res = _HotelService.UpdateHotel(id, obj);
                 }
                 if (res != null)
                     return Request.CreateResponse(HttpStatusCode.OK, res);
                 else
                     return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, "Data Not Updated");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
-                //return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
         }
-
 
 
         /// <summary>
         /// Delete an item from the list
         /// </summary>
         /// <param name=<em>"id"</em>>id of the item to be deleted</param>
-        // DELETE: api/Bed/5
+        // DELETE: api/Country/5
         public bool Delete(int id)
         {
             if (id >= 0)
-                return _BedService.DeleteBed(id);
+                return _HotelService.DeleteHotel(id);
             return false;
         }
+
     }
 }

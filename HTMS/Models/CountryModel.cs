@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HTMS.Models
 {
     public class CountryModel
     {
-       /// public int Id { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public int Id { get; set; }
 
         public string CountryName { get; set; }
 

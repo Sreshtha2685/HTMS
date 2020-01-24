@@ -14,37 +14,38 @@ using System.Web.Mvc;
 
 namespace HTMS.Controllers
 {
-    public class BedController : Controller
+    public class HotelController : Controller
     {
         HttpClient client = new HttpClient();
-        Bed bed = null;
-        public List<Bed> LstAllBed = new List<Bed>();
+        Hotel hotel = null;
+        public List<Hotel> LstAllHotel = new List<Hotel>();
         private readonly RestClient _client = new RestClient();
         private readonly string _url = ConfigurationManager.AppSettings["url"];
         HTMEntities3 db = new HTMEntities3();
-        public BedController()
+        public HotelController()
         {
             _client = new RestClient(_url);
             client.BaseAddress = new Uri(_url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        // GET: Bed
-        public ActionResult Bed()
+
+        // GET: Hotel
+        public ActionResult Hotel()
         {
             return View();
         }
-        public IEnumerable<Bed> GetAllBed()
+        public IEnumerable<Hotel> GetAllHotel()
         {
 
             try
             {
 
 
-                HttpResponseMessage res = client.GetAsync("api/Bed").Result;
+                HttpResponseMessage res = client.GetAsync("api/Hotel").Result;
                 if (res.IsSuccessStatusCode)
                 {
-                    LstAllBed = res.Content.ReadAsAsync<List<Bed>>().Result.ToList();
-                    return LstAllBed.Where(a => a.IsActive == true && a.IsDelete == false).OrderByDescending(a => a.InsertedOn).ToList(); ;
+                    LstAllHotel = res.Content.ReadAsAsync<List<Hotel>>().Result.ToList();
+                    return LstAllHotel.Where(a => a.IsActive == true && a.IsDelete == false).OrderByDescending(a => a.InsertedOn).ToList(); ;
                 }
                 else
                 {
@@ -59,11 +60,11 @@ namespace HTMS.Controllers
 
         }
 
-        public ActionResult GetAllBedList([DataSourceRequest]DataSourceRequest request)
+        public ActionResult GetAllHotelList([DataSourceRequest]DataSourceRequest request)
         {
             try
             {
-                var skilldetails = GetAllBed().OrderByDescending(a => a.id).ToList();
+                var skilldetails = GetAllHotel().OrderByDescending(a => a.id).ToList();
                 return Json(skilldetails.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
 
             }
@@ -75,14 +76,14 @@ namespace HTMS.Controllers
 
 
         }
-        private List<Bed> GetHotelData()
+        private List<Hotel> GetHotelData()
         {
             try
             {
-                bed = new Bed();
-                var request = new RestRequest("api/Bed", Method.GET) { RequestFormat = DataFormat.Json };
+                hotel = new Hotel();
+                var request = new RestRequest("api/Hotel", Method.GET) { RequestFormat = DataFormat.Json };
 
-                var response = _client.Execute<List<Bed>>(request);
+                var response = _client.Execute<List<Hotel>>(request);
                 if (response.Data == null)
                     throw new Exception(response.ErrorMessage);
                 return response.Data.Where(a => a.IsActive == true && a.IsDelete == false).ToList();
@@ -93,20 +94,19 @@ namespace HTMS.Controllers
             }
         }
 
-        public ActionResult BindAllBed([DataSourceRequest] DataSourceRequest req)
+        public ActionResult BindAllHotel([DataSourceRequest] DataSourceRequest req)
         {
             try
             {
 
-                var data = GetAllBed();
+                var data = GetAllHotel();
                 var query = (from a in data
-                             select new BedModel
+                             select new HotelModel
                              {
-                                 id =a.id,
-                                 Bed_Number = a.Bed_Number,
-                                 Bed_Code = a.Bed_Code,
-                                 Description =a.Description
-
+                                 id = a.id,
+                                 HotelName = a.Hotel_Name,
+                                 HotelNumber = a.Hotel_Number,
+                                
 
                              }).ToList();
 
@@ -128,14 +128,14 @@ namespace HTMS.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetBedById(int id)
+        public ActionResult GetHotelById(int id)
         {
             try
             {
-                bed = new Bed();
-                var request = new RestRequest("api/Bed/" + id, Method.GET) { RequestFormat = DataFormat.Json };
+                hotel = new Hotel();
+                var request = new RestRequest("api/Hotel/" + id, Method.GET) { RequestFormat = DataFormat.Json };
 
-                var response = _client.Execute<List<Bed>>(request);
+                var response = _client.Execute<List<Hotel>>(request);
 
                 if (response.Data == null)
                     throw new Exception(response.ErrorMessage);
@@ -150,7 +150,7 @@ namespace HTMS.Controllers
 
 
         [HttpPost]
-        public ActionResult AddBed(Bed obj)
+        public ActionResult AddHotel(Hotel obj)
         {
 
 
@@ -159,7 +159,7 @@ namespace HTMS.Controllers
             obj.IsActive = true;
             obj.IsDelete = false;
 
-            HttpResponseMessage response1 = client.PostAsJsonAsync("api/Bed", obj).Result;
+            HttpResponseMessage response1 = client.PostAsJsonAsync("api/Hotel", obj).Result;
             if (response1.IsSuccessStatusCode)
             {
                 return Json("OK", JsonRequestBehavior.AllowGet);
@@ -174,41 +174,41 @@ namespace HTMS.Controllers
 
 
         [AcceptVerbs("Post")]
-        public ActionResult EditingPopup_Update(Bed bed)
+        public ActionResult EditingPopup_Update(Hotel hotel)
         {
             try
             {
                 string result = "fail";
-                var ss = GetAllBed().ToList().Where(a => a.id == bed.id).FirstOrDefault();
+                var ss = GetAllHotel().ToList().Where(a => a.id == hotel.id).FirstOrDefault();
                 if (ss != null)
                 {
-                    bed.InsertedBy = 1;
-                    bed.InsertedOn = DateTime.Now;
-                    bed.IsActive = true;
-                    bed.IsDelete = false;
-                    var res = new RestRequest("api/Bed/" + bed.id, Method.PUT) { RequestFormat = DataFormat.Json };
-                    res.AddJsonBody(bed);
-                    var response = _client.Execute<List<Bed>>(res);
+                    hotel.InsertedBy = ss.InsertedBy;
+                    hotel.InsertedOn = DateTime.Now;
+                    hotel.IsActive = true;
+                    hotel.IsDelete = false;
+                    var res = new RestRequest("api/Hotel/" + hotel.id, Method.PUT) { RequestFormat = DataFormat.Json };
+                    res.AddJsonBody(hotel);
+                    var response = _client.Execute<List<Hotel>>(res);
 
                     if (response.Data == null)
                         throw new Exception(response.ErrorMessage);
-                    return Json(new { result = "Bed", res = "" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { result = "Hotel", res = "" }, JsonRequestBehavior.AllowGet);
 
                 }
                 else
                 {
-                    bed.InsertedBy = 1;
-                    bed.InsertedOn = DateTime.Now;
-                    bed.IsActive = true;
-                    bed.IsDelete = false;
+                    hotel.InsertedBy = 1;
+                    hotel.InsertedOn = DateTime.Now;
+                    hotel.IsActive = true;
+                    hotel.IsDelete = false;
 
-                    HttpResponseMessage clientRequest = client.PutAsJsonAsync("api/Bed/" , bed).Result;
+                    HttpResponseMessage clientRequest = client.PutAsJsonAsync("api/Hotel/" , hotel).Result;
                     if (clientRequest.IsSuccessStatusCode)
                     {
                         return Json("OK", JsonRequestBehavior.AllowGet);
                     }
                     //throw new Exception(response.ErrorMessage);
-                    return Json(new { result = "Bed", res = "" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { result = "Hotel", res = "" }, JsonRequestBehavior.AllowGet);
 
 
                 }
@@ -219,7 +219,7 @@ namespace HTMS.Controllers
             }
         }
 
-        public JsonResult DeleteBed(string[] id)
+        public JsonResult DeleteHotel(string[] id)
         {
 
             //for (int i = 0; i < id.Length; i++)
@@ -229,7 +229,7 @@ namespace HTMS.Controllers
             {
 
 
-                HttpResponseMessage clientRequest = client.DeleteAsync("api/Bed/" + Convert.ToInt32(id[i])).Result;
+                HttpResponseMessage clientRequest = client.DeleteAsync("api/Hotel/" + Convert.ToInt32(id[i])).Result;
                 if (clientRequest.IsSuccessStatusCode)
                 {
 
@@ -243,5 +243,6 @@ namespace HTMS.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
 
         }
+
     }
 }

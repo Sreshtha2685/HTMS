@@ -132,7 +132,7 @@ namespace HTMS.Controllers
                             
                              select new StateModel
                              {
-                                 //  id = a.Id,
+                                   id = a.Id,
                                  CityName = a.CityName,
                                  //StateId = a.StateId,
                                  //CountryId = a.CountryId,

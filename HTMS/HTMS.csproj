@@ -230,6 +230,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,6 +240,7 @@
     <Compile Include="Models\BedModel.cs" />
     <Compile Include="Models\CityModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\HotelModel.cs" />
     <Compile Include="Models\RoomTypes.cs" />
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -3227,6 +3229,8 @@
     <Content Include="Views\Shared\_partialAddCity.cshtml" />
     <Content Include="Views\Bed\Bed.cshtml" />
     <Content Include="Views\Shared\_partialAddBed.cshtml" />
+    <Content Include="Views\Hotel\Hotel.cshtml" />
+    <Content Include="Views\Shared\_partialAddHotel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HTMS.Models
 {
     public class CityModel
     {
-       // public int id { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public int id { get; set; }
 
         public string CityName { get; set; }
         public string StateName { get; set; }

@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Bed";
+    ViewBag.Title = "Hotel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -100,12 +100,12 @@
     <div class="row">
 
         <div class="row">
-            <div class="head-left breadcrumbs">Product Management &gt;<span class="breadcrumbsActive"> Bed</span></div>
+            <div class="head-left breadcrumbs">Product Management &gt;<span class="breadcrumbsActive"> Products</span></div>
         </div>
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                <span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add Bed</span>
+                <span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add Hotel</span>
                 <span class="grid_head">
                     <span id="hdrDropdown">
                         @( Html.Kendo().DropDownList()
@@ -167,19 +167,19 @@
 
 <div class="row" id="chkBoxGrid" style=" margin-top:6px;
             margin-left: 146px;">
-    @(Html.Kendo().Grid<HTMS.Models.BedModel>()
+    @(Html.Kendo().Grid<HTMS.Models.HotelModel>()
                             .Name("grid")
                             .Columns(columns =>
                             {
-                                //columns.Select().Width(30);
-                                //columns.Bound(p => p.id).Hidden();
-                                // columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
-                               // columns.Bound(p => p.BedCode).Width(80).Title("RoomName").Width("30");
-                                columns.Bound(p => p.Bed_Number).Width(80).Title("BedNo");
-
+                    //columns.Select().Width(30);
+                    //columns.Bound(p => p.id).Hidden();
+                    //columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
+                                columns.Bound(p => p.HotelName).Width(80).Title("HotelName").Width("30");
+                                columns.Bound(p => p.HotelNumber).Width(80).Title("HotelNumber");
+                               
                                 columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
-                                // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
-                                columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
+                    // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
+                    columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
                             })
                         .Editable(editable => editable.Mode(GridEditMode.PopUp))
@@ -189,11 +189,10 @@
                         // .PersistSelection()
                         .DataSource(dataSource => dataSource
                             .Ajax()
-
-                            .Model(model => model.Id(p => p.Bed_Number))
-                            .Read(read => read.Action("BindAllBed", "Bed"))
-                            .Update(update => update.Action("EditingPopup_Update", "Bed"))
-                            .Destroy(update => update.Action("DeleteBed", "Bed"))
+                            .Model(model => model.Id(p => p.HotelNumber))
+                            .Read(read => read.Action("BindAllHotel", "Hotel"))
+                            .Update(update => update.Action("EditingPopup_Update", "Hotel"))
+                            .Destroy(update => update.Action("DeleteHotel", "Hotel"))
                         )
     )
 
@@ -230,12 +229,12 @@
 
 <div class="col-md-12">
     @(Html.Kendo().Window().Name("AddDetails")
-                                                                        .Title("Add Bed ")
+                                                                        .Title("Add Hotel ")
                                                                         .Visible(false)
                                                                         .Modal(true)
                                                                         .Content(@<text>
                                                                             <div style="width:100%" id="fieldlist">
-                                                                                @Html.Partial("_partialAddBed")
+                                                                                @Html.Partial("_partialAddHotel")
                                                                             </div>
                                                                         </text>)
 
@@ -334,10 +333,11 @@
 
             var prdModel = {
 
-                Bed_Number: $("#txtBedNo").val(),
-              //  BedCode: $("#txtCode").val(),
-                Description: $("#txtDescription").val(),
+                Hotel_Name: $("#txtHotel").val(),
+                Hotel_Number: $("#txtHotelNumber").val(),
                
+                Description: $("#txtDescription").val(),
+                
 
             }
             var model = {
@@ -345,7 +345,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: "/Bed/AddBed",
+                url: "/Hotel/AddHotel",
 
                 data: model,
                 dataType: "json",
@@ -356,7 +356,7 @@
 
                         // btnReset_Click();
                         // location.reload();
-                        alert("Bed added Successfully");
+                        alert("Hotel added Successfully");
                         location.reload();
                         var grid = $('#grid').data("kendoGrid");
                         grid.dataSource.read();

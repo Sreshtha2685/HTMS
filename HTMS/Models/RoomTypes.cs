@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HTMS.Models
 {
     public class RoomTypes
     {
-     public int id { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public int id { get; set; }
 
         public string RoomName { get; set; }
 
@@ -17,6 +19,7 @@ namespace HTMS.Models
         public string Description { get; set; }
         public Nullable<int> RoomStatusId { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public Nullable<bool> IsChecked { get; set; }
 
         //public Nullable<System.DateTime> InsertedOn { get; set; }

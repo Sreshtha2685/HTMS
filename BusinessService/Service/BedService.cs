@@ -44,11 +44,11 @@ namespace BusinessService.Service
                     Bed_Code = BedEntity.Bed_Code,
                     Description = BedEntity.Description,
                     Bed_Number = BedEntity.Bed_Number,
-                   
-                    //InsertedOn = RoomTypeEntity.InsertedOn,
-                    //InsertedBy = RoomTypeEntity.InsertedBy,
-                    //IsActive = RoomTypeEntity.IsActive,
-                    //IsDelete = RoomTypeEntity.IsDelete
+
+                    InsertedOn = BedEntity.InsertedOn,
+                    InsertedBy = BedEntity.InsertedBy,
+                    IsActive = BedEntity.IsActive,
+                    IsDelete = BedEntity.IsDelete
 
 
                 };
