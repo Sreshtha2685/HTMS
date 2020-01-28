@@ -10,6 +10,7 @@ namespace BusinessService.Interface
    public interface IStatusService
     {
         Status GetStatusById(int Id);
+        
         IEnumerable<Status> GetAllStatus();
         Status CreateStatus(Status StatusEntity);
        

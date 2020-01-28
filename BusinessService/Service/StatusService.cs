@@ -13,6 +13,7 @@ namespace BusinessService.Service
     public class StatusService : IStatusService
     {
         private readonly UnitOfWork _unitOfWork;
+        
 
         /// <summary>
         /// Public constructor.
