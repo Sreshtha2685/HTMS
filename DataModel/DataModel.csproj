@@ -203,6 +203,9 @@
       <DependentUpon>HTMSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Room.cs">
+      <DependentUpon>HTMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="RoomFacility.cs">
       <DependentUpon>HTMSModel.tt</DependentUpon>
     </Compile>

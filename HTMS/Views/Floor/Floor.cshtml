@@ -1,0 +1,343 @@
+﻿
+@model HTMS.Models.FloorModel
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "Floor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .k-button k-button-icontext k-grid-edit, k-button k-button-icontext k-grid-delete {
+        background-color: burlywood;
+    }
+
+    div.k-window {
+        display: inline-block;
+        position: absolute;
+        width: 500px;
+        z-index: 10001;
+        border-style: solid;
+        border-width: 1px;
+        padding-top: 2em;
+    }
+
+    div.k-window-content {
+        position: relative;
+        height: 100%;
+        padding: .58em;
+        outline: 0;
+    }
+
+
+
+    #grid1 {
+        margin-top: 35px;
+        margin-left: 66px;
+    }
+
+    .k-state-active {
+        display: none;
+    }
+
+    }
+
+    element.style {
+    }
+
+    a.k-button.k-button-icontext .k-icon, a.k-button.k-button-icontext .k-image {
+        vertical-align: text-top;
+    }
+</style>
+@*<link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.web.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.all.min.js"></script>*@
+
+
+
+
+
+
+<script type="text/javascript">
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgadd').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    function show1(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgabout').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+
+<style>
+</style>
+
+
+<div class="row content_start">
+    @******************toolbar start****************************@
+    <div class="row">
+
+        <div class="row">
+            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive"> Floor</span></div>
+        </div>
+
+        <div class="row ribbon">
+            <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
+                <span class="grid_head" id="btn_new" style="margin-left:45px;">&#43; Add Floor</span>
+                <span class="grid_head">
+                    <span id="hdrDropdown">
+                        @( Html.Kendo().DropDownList()
+                                                                   .Name("ActionDropdown")
+                                                                   .DataTextField("Text")
+                                                                   .DataValueField("Value")
+                                                                   .HtmlAttributes(new { style = "height: 27px;font-size:13px;" })
+                                                                   .OptionLabel("More Action")
+                                                                   .BindTo(new List<SelectListItem>() {
+                                                                                                                              new SelectListItem() {
+                                                                                                                                  Text =  "Activate",
+                                                                                                                                  Value = "1"
+
+                                                                                                                              },
+                                                                                                                               new SelectListItem() {
+                                                                                                                                  Text = "Deactivate",
+                                                                                                                                  Value = "2"
+                                                                                                                              },
+                                                                                                                              new SelectListItem() {
+                                                                                                                                  Text = "Import",
+                                                                                                                                  Value = "3"
+                                                                                                                              },
+
+                                                                                                                               new SelectListItem() {
+                                                                                                                                  Text = "Export",
+                                                                                                                                  Value = "4"
+                                                                                                                              },
+                                                                                                                               new SelectListItem() {
+                                                                                                                                  Text = "Refresh",
+                                                                                                                                  Value = "5"
+                                                                                                                              },
+                                                                                                                                new SelectListItem() {
+                                                                                                                                  Text = "Print",
+                                                                                                                                  Value = "6"
+                                                                                                                              }
+})
+.Template("<img  src='https://kencloudadmin.blob.core.windows.net/kencloudecosysadmin/More Actions/" + "${Value}.png' width='15' height='15' />" + "<span style='margin-left: 5px;'>${Text}</span>"))
+                    </span>
+                </span>
+
+            </div>
+            @*<div class="col-sm-6 hdrRight" style="margin-left: 964px;
+                margin-top: -28px;">
+                            <input type="text" id="textboxIconRight" placeholder="Search by Category/Name/Company" title="Type in a name" class="serach_bar hdrfield">
+                            <span class="km-icon km-search" onclick="onSearch()"></span>
+
+                            <span class="km-icon km-search"></span>
+                        </div*@>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+@********************************Grid************************************@
+<div class="row" id="chkBoxGrid" style=" margin-top:6px;
+            margin-left: 141px;">
+    @(Html.Kendo().Grid<HTMS.Models.FloorModel>()
+                                            .Name("grid")
+                                            .Columns(columns =>
+                                            {
+
+                                                columns.Bound(p => p.FloorNumber).Width(80).Title("FloorNumber").Width("30");
+
+                                     columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+
+                                    columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
+
+                                            })
+                                        .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                         .Pageable()
+                                        .Sortable()
+                                        // .Events(ev => ev.Change("onChange"))
+                                        // .PersistSelection()
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .Model(model => model.Id(p => p.Id))
+                                            .Read(read => read.Action("BindAllFloor", "Floor"))
+                                            .Update(update => update.Action("EditingPopup_Update", "Floor"))
+                                            .Destroy(update => update.Action("DeleteFloor", "Floor"))
+                                        )
+    )
+
+    <script>
+        function onChange(arg) {
+            kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+        }
+    </script>
+    <div class="box wide">
+        <div class="console"></div>
+    </div>
+    <style>
+        .console div {
+            height: 3.3em;
+        }
+    </style>
+</div>
+
+
+
+@*======================================================<  Add new Part    >=====================================*@
+
+
+<script>
+    $("#btn_new").click(function (e) {
+        debugger
+        e.preventDefault();
+        $("#AddDetails").data("kendoWindow").center().open();
+        $("#newAdd").show();
+        //btnReset_Click();
+        $("#btnSave").kendoButton({}).data("kendoButton").enable(true);
+
+    });
+</script>
+
+<div class="col-md-12">
+    @(Html.Kendo().Window().Name("AddDetails")
+                                           .Title("Add Country ")
+                                            .Visible(false)
+                                          .Modal(true)
+                                          .Content(@<text>
+                                            <div style="width:100%" id="fieldlist">
+                                                @Html.Partial("_partialAddFloor")
+                                            </div>
+                                        </text>)
+
+                                                    .Actions(actions => actions.Close())
+
+    )
+</div>
+
+<script type="text/javascript">
+    function onClose() {
+        debugger;
+        $("#newAdd").show();
+        // btnReset_Click();
+    }
+    $(document).ready(function () {
+        $("#newAdd").bind("click", function () {
+            debugger;
+            $("#AddDetails").data("kendoWindow").center().open();
+            $("#newAdd").show();
+            $("#btnSave").kendoButton({}).data("kendoButton").enable(true);
+        });
+    });
+</script>
+
+
+
+
+
+@*----------------------sidenav-----------------------------------------------*@
+
+
+
+
+@*<section id="addnew">
+
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+
+        </div>
+
+
+
+    </section>
+    <script>
+        function openNav() {
+            // alert("hii");
+            document.getElementById("mySidebar").style.width = "350px";
+            document.getElementById("main").style = "350px";
+        }
+
+        function closeNav() {
+            debugger;
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style = "0";
+        }
+    </script>*@
+
+@*-----------------------------Add function---------------------------------*@
+
+<script type="text/javascript">
+
+    function btnSave_Click() {
+        debugger;
+      //  alert("hii");
+        var validator = $('#save-container').kendoValidator().data("kendoValidator");
+
+
+        if (validator.validate()) {
+
+
+            var prdModel = {
+
+                Floor_Number: $("#txtFloor").val(),
+
+                Description: $("#txtDescription").val(),
+
+
+            }
+            var model = {
+                "obj": prdModel
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Floor/AddFloor",
+
+                data: model,
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+
+                        debugger;
+
+                        // btnReset_Click();
+                        // location.reload();
+                        alert("Floor added Successfully");
+                        location.reload();
+                        var grid = $('#grid').data("kendoGrid");
+                        grid.dataSource.read();
+
+                        return true;
+                    }
+                    else
+                        return false;
+                },
+                error: function (err) {
+                    alert("fail");
+
+                }
+            });
+            // closeNav();
+            var grid = $('#grid').data("kendoGrid");
+            grid.dataSource.read();
+        }
+    }
+
+</script>
+

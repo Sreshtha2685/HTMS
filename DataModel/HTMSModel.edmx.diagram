@@ -5,21 +5,26 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fea331d5c7d547f79f6840b7d5ae2edf" Name="Diagram1">
-        <EntityTypeShape EntityType="HTMModel.AutoGenerate" Width="1.5" PointX="2.75" PointY="5.75" />
-        <EntityTypeShape EntityType="HTMModel.Bed" Width="1.5" PointX="2.75" PointY="8.75" />
-        <EntityTypeShape EntityType="HTMModel.City" Width="1.5" PointX="8" PointY="1" />
-        <EntityTypeShape EntityType="HTMModel.Country" Width="1.5" PointX="5.75" PointY="5.125" />
-        <EntityTypeShape EntityType="HTMModel.Floor" Width="1.5" PointX="7.75" PointY="5.125" />
-        <EntityTypeShape EntityType="HTMModel.Hotel" Width="1.5" PointX="4.75" PointY="8.75" />
-        <EntityTypeShape EntityType="HTMModel.RoomFacility" Width="1.5" PointX="10" PointY="5" />
-        <EntityTypeShape EntityType="HTMModel.RoomRate" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="HTMModel.RoomRateType" Width="1.5" PointX="0.75" PointY="1.125" />
-        <EntityTypeShape EntityType="HTMModel.RoomType" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="HTMModel.State" Width="1.5" PointX="5.75" PointY="1.125" />
-        <EntityTypeShape EntityType="HTMModel.Status" Width="1.5" PointX="6.75" PointY="8.75" />
+        <EntityTypeShape EntityType="HTMModel.AutoGenerate" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HTMModel.Bed" Width="1.5" PointX="0.75" PointY="15" />
+        <EntityTypeShape EntityType="HTMModel.City" Width="1.5" PointX="10" PointY="6" />
+        <EntityTypeShape EntityType="HTMModel.Country" Width="1.5" PointX="7.75" PointY="10.125" />
+        <EntityTypeShape EntityType="HTMModel.Floor" Width="1.5" PointX="0.75" PointY="3.25" />
+        <EntityTypeShape EntityType="HTMModel.Hotel" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="HTMModel.Room" Width="1.5" PointX="3" PointY="3" />
+        <EntityTypeShape EntityType="HTMModel.RoomFacility" Width="1.5" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="HTMModel.RoomRate" Width="1.5" PointX="8" PointY="1.25" />
+        <EntityTypeShape EntityType="HTMModel.RoomRateType" Width="1.5" PointX="5.75" PointY="5.5" />
+        <EntityTypeShape EntityType="HTMModel.RoomType" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="HTMModel.State" Width="1.5" PointX="7.75" PointY="6.125" />
+        <EntityTypeShape EntityType="HTMModel.Status" Width="1.5" PointX="0.75" PointY="11.625" />
+        <AssociationConnector Association="HTMModel.FK_Room_Bed" />
         <AssociationConnector Association="HTMModel.FK_City_Country" />
         <AssociationConnector Association="HTMModel.FK_City_State" />
+        <AssociationConnector Association="HTMModel.FK_Room_Floor" />
         <AssociationConnector Association="HTMModel.FK_RoomFacility_Floor" />
+        <AssociationConnector Association="HTMModel.FK_Room_Hotel" />
+        <AssociationConnector Association="HTMModel.FK_Room_RoomStatus" />
         <AssociationConnector Association="HTMModel.FK_RoomRate_RoomRateType" />
         <AssociationConnector Association="HTMModel.FK_RoomRate_RoomType" />
       </Diagram>

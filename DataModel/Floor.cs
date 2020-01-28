@@ -17,6 +17,7 @@ namespace DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Floor()
         {
+            this.Rooms = new HashSet<Room>();
             this.RoomFacilities = new HashSet<RoomFacility>();
         }
     
@@ -28,6 +29,8 @@ namespace DataModel
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomFacility> RoomFacilities { get; set; }
     }

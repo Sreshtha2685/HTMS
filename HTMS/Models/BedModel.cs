@@ -17,9 +17,14 @@ namespace HTMS.Models
         public Nullable<int> Bed_Code { get; set; }
 
         public string Description { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public int InsertedBy { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
         public DateTime InsertedOn { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public bool IsActive { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public bool IsDelete { get; set; }
     }
 }

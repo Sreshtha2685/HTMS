@@ -14,6 +14,12 @@ namespace DataModel
     
     public partial class Bed
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Bed()
+        {
+            this.Rooms = new HashSet<Room>();
+        }
+    
         public int id { get; set; }
         public Nullable<int> Bed_Number { get; set; }
         public Nullable<int> Bed_Code { get; set; }
@@ -22,5 +28,8 @@ namespace DataModel
         public Nullable<System.DateTime> InsertedOn { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

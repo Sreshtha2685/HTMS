@@ -14,6 +14,12 @@ namespace DataModel
     
     public partial class Status
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Status()
+        {
+            this.Rooms = new HashSet<Room>();
+        }
+    
         public int id { get; set; }
         public string Status1 { get; set; }
         public string Description { get; set; }
@@ -21,5 +27,8 @@ namespace DataModel
         public Nullable<int> InsertedBy { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

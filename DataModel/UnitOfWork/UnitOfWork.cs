@@ -29,6 +29,9 @@ namespace DataModel.UnitOfWork
         private GenericRepository<City> _CityRepository;
         private GenericRepository<Bed> _BedRepository;
         private GenericRepository<Hotel> _HotelRepository;
+        private GenericRepository<Status> _StatusRepository;
+        private GenericRepository<Floor> _FloorRepository;
+
 
 
         #endregion
@@ -100,6 +103,24 @@ namespace DataModel.UnitOfWork
                 if (this._HotelRepository == null)
                     this._HotelRepository = new GenericRepository<Hotel>(_context);
                 return _HotelRepository;
+            }
+        }
+        public GenericRepository<Status> StatusRepository
+        {
+            get
+            {
+                if (this._StatusRepository == null)
+                    this._StatusRepository = new GenericRepository<Status>(_context);
+                return _StatusRepository;
+            }
+        }
+        public GenericRepository<Floor> FloorRepository
+        {
+            get
+            {
+                if (this._FloorRepository == null)
+                    this._FloorRepository = new GenericRepository<Floor>(_context);
+                return _FloorRepository;
             }
         }
 
