@@ -13,7 +13,7 @@ namespace BusinessService.Service
   public  class BedService : IBedService
     {
         private readonly UnitOfWork _unitOfWork;
-
+        
         /// <summary>
         /// Public constructor.
         /// </summary>
