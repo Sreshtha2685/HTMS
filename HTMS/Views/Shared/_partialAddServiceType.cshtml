@@ -1,0 +1,84 @@
+﻿@using Kendo.Mvc.UI;
+@{
+    ViewBag.Title = "_partialAddServiceType";
+    Layout = null;
+}
+
+<style>
+    .control-label {
+        font-family: auto;
+    }
+
+    .k-textbox {
+        width: 228px;
+    }
+</style>
+
+<form id="AddForm">
+    <div id="save-container" style="margin-left: -16px">
+
+
+        <div class="col-lg-12">
+
+            <div class="col-lg-6">
+                @Html.Label("ServiceType Name:", htmlAttributes: new { @class = "control-label", required = "required", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-64px;margin-top:10px">
+                <input type="text" id="txtServiceType" value="" style="width:221px;height: 23px;border-radius: 4px;">
+
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="col-lg-6">
+                @Html.Label("Description:", htmlAttributes: new { @class = "control-label", required = "required", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-64px;margin-top:10px">
+                <input type="text" id="txtDescription" value="" style="width:221px;height: 23px;border-radius: 4px;">
+
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="clearfix" style="padding-bottom: 10px;"></div>
+
+    <div class="row" style="margin-top:5px"></div>
+    <div class="rowbtn" style="margin-left: 219px;
+    margin-top: 28px;">
+
+        <button id="btnSave" class="k-primary" onclick="btnSave_Click()" style="border-color: darkslategrey;background-color: darkslategray;">Save</button>
+
+
+        <button id="btnReset" class="k-primary k-button" onclick="btnReset_Click()" style="border-color: darkslategrey;background-color: darkslategray;">Reset</button>
+
+    </div>
+</form>
+<script>
+
+    function btnReset_Click() {
+        debugger
+
+        document.getElementById("txtCountry").value = "";
+
+        $("#btnSave").kendoButton({}).data("kendoButton").enable(true);
+        var wnd = $("#AddDetails").data("kendoWindow");
+        wnd.element.find("span.k-tooltip-validation").hide();
+        return;
+    }
+
+</script>
+@*<script type="text/javascript">
+    $(function () {
+        debugger;
+        // The Name() of the DropDownList is used to get its client-side instance.
+        var dropdownlist = $("#txtServiceType").data("kendoDropDownList");
+        console.log(dropdownlist);
+    });
+</script>*@

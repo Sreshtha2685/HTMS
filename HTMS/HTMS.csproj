@@ -233,8 +233,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
+    <Compile Include="Controllers\ServiceTypeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -245,8 +247,10 @@
     <Compile Include="Models\FloorModel.cs" />
     <Compile Include="Models\HotelModel.cs" />
     <Compile Include="Models\RoomTypes.cs" />
+    <Compile Include="Models\ServiceTypeModel.cs" />
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3239,6 +3243,9 @@
     <Content Include="Views\Shared\_partialAddStatus.cshtml" />
     <Content Include="Views\Floor\Floor.cshtml" />
     <Content Include="Views\Shared\_partialAddFloor.cshtml" />
+    <Content Include="Views\ServiceType\ServiceType.cshtml" />
+    <Content Include="Views\Shared\_partialAddServiceType.cshtml" />
+    <Content Include="Views\User\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

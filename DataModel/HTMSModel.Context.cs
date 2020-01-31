@@ -36,7 +36,11 @@ namespace DataModel
         public virtual DbSet<RoomRate> RoomRates { get; set; }
         public virtual DbSet<RoomRateType> RoomRateTypes { get; set; }
         public virtual DbSet<RoomType> RoomTypes { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<ServiceType> ServiceTypes { get; set; }
+        public virtual DbSet<Source> Sources { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

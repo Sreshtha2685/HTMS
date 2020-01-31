@@ -174,8 +174,10 @@
     <Compile Include="Interface\ICityService.cs" />
     <Compile Include="Interface\ICountryService.cs" />
     <Compile Include="Interface\IRoomTypeService.cs" />
+    <Compile Include="Interface\IServiceTypeService.cs" />
     <Compile Include="Interface\IStateService.cs" />
     <Compile Include="Interface\IStatusService.cs" />
+    <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BedService.cs" />
     <Compile Include="Service\CityService.cs" />
@@ -183,8 +185,10 @@
     <Compile Include="Service\FloorService.cs" />
     <Compile Include="Service\HotelService.cs" />
     <Compile Include="Service\RoomTypeService.cs" />
+    <Compile Include="Service\ServiceTypeService.cs" />
     <Compile Include="Service\StateService.cs" />
     <Compile Include="Service\StatusService.cs" />
+    <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessEntity\BusinessEntity.csproj">

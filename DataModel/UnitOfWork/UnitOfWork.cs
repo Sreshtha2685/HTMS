@@ -31,6 +31,9 @@ namespace DataModel.UnitOfWork
         private GenericRepository<Hotel> _HotelRepository;
         private GenericRepository<Status> _StatusRepository;
         private GenericRepository<Floor> _FloorRepository;
+        private GenericRepository<ServiceType> _ServiceTypeRepository;
+        private GenericRepository<Service> _ServiceRepository;
+        private GenericRepository<User> _UserRepository;
 
 
 
@@ -121,6 +124,34 @@ namespace DataModel.UnitOfWork
                 if (this._FloorRepository == null)
                     this._FloorRepository = new GenericRepository<Floor>(_context);
                 return _FloorRepository;
+            }
+        }
+
+        public GenericRepository<ServiceType> ServiceTypeRepository
+        {
+            get
+            {
+                if (this._ServiceTypeRepository == null)
+                    this._ServiceTypeRepository = new GenericRepository<ServiceType>(_context);
+                return _ServiceTypeRepository;
+            }
+        }
+        public GenericRepository<Service> ServiceRepository
+        {
+            get
+            {
+                if (this._ServiceRepository == null)
+                    this._ServiceRepository = new GenericRepository<Service>(_context);
+                return _ServiceRepository;
+            }
+        }
+        public GenericRepository<User> UserRepository
+        {
+            get
+            {
+                if (this._UserRepository == null)
+                    this._UserRepository = new GenericRepository<User>(_context);
+                return _UserRepository;
             }
         }
 

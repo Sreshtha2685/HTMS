@@ -218,6 +218,15 @@
     <Compile Include="RoomType.cs">
       <DependentUpon>HTMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service.cs">
+      <DependentUpon>HTMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceType.cs">
+      <DependentUpon>HTMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Source.cs">
+      <DependentUpon>HTMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="State.cs">
       <DependentUpon>HTMSModel.tt</DependentUpon>
     </Compile>
@@ -225,6 +234,9 @@
       <DependentUpon>HTMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>HTMSModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

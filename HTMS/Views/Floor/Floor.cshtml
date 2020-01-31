@@ -165,9 +165,9 @@
 
                                                 columns.Bound(p => p.FloorNumber).Width(80).Title("FloorNumber").Width("30");
 
-                                     columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+                                                columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
 
-                                    columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
+                                                columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
                                             })
                                         .Editable(editable => editable.Mode(GridEditMode.PopUp))

@@ -148,6 +148,45 @@
           <Property Name="IsDelete" Type="bit" />
           <Property Name="IsChecked" Type="bit" />
         </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="ServiceTypeId" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Rate" Type="float" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="ServiceType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceTypeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+        </EntityType>
         <EntityType Name="State">
           <Key>
             <PropertyRef Name="Id" />
@@ -171,6 +210,20 @@
           <Property Name="InsertedBy" Type="int" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserRole" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedBy" Type="int" />
+          <Property Name="InsertedOn" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_City_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
@@ -280,6 +333,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Service_ServiceType">
+          <End Role="ServiceType" Type="Self.ServiceType" Multiplicity="0..1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HTMModelStoreContainer">
           <EntitySet Name="AutoGenerate" EntityType="Self.AutoGenerate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bed" EntityType="Self.Bed" Schema="dbo" store:Type="Tables" />
@@ -292,8 +357,12 @@
           <EntitySet Name="RoomRate" EntityType="Self.RoomRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomRateType" EntityType="Self.RoomRateType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomType" EntityType="Self.RoomType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceType" EntityType="Self.ServiceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_City_Country" Association="Self.FK_City_Country">
             <End Role="Country" EntitySet="Country" />
             <End Role="City" EntitySet="City" />
@@ -330,6 +399,10 @@
             <End Role="RoomType" EntitySet="RoomType" />
             <End Role="RoomRate" EntitySet="RoomRate" />
           </AssociationSet>
+          <AssociationSet Name="FK_Service_ServiceType" Association="Self.FK_Service_ServiceType">
+            <End Role="ServiceType" EntitySet="ServiceType" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -347,8 +420,12 @@
           <EntitySet Name="RoomRates" EntityType="HTMModel.RoomRate" />
           <EntitySet Name="RoomRateTypes" EntityType="HTMModel.RoomRateType" />
           <EntitySet Name="RoomTypes" EntityType="HTMModel.RoomType" />
+          <EntitySet Name="Services" EntityType="HTMModel.Service" />
+          <EntitySet Name="ServiceTypes" EntityType="HTMModel.ServiceType" />
+          <EntitySet Name="Sources" EntityType="HTMModel.Source" />
           <EntitySet Name="States" EntityType="HTMModel.State" />
           <EntitySet Name="Status" EntityType="HTMModel.Status" />
+          <EntitySet Name="Users" EntityType="HTMModel.User" />
           <AssociationSet Name="FK_Room_Bed" Association="HTMModel.FK_Room_Bed">
             <End Role="Bed" EntitySet="Beds" />
             <End Role="Room" EntitySet="Rooms" />
@@ -384,6 +461,10 @@
           <AssociationSet Name="FK_RoomRate_RoomType" Association="HTMModel.FK_RoomRate_RoomType">
             <End Role="RoomType" EntitySet="RoomTypes" />
             <End Role="RoomRate" EntitySet="RoomRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Service_ServiceType" Association="HTMModel.FK_Service_ServiceType">
+            <End Role="ServiceType" EntitySet="ServiceTypes" />
+            <End Role="Service" EntitySet="Services" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AutoGenerate">
@@ -545,6 +626,47 @@
           <Property Name="IsChecked" Type="Boolean" />
           <NavigationProperty Name="RoomRates" Relationship="HTMModel.FK_RoomRate_RoomType" FromRole="RoomType" ToRole="RoomRate" />
         </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceTypeId" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Rate" Type="Double" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="ServiceType" Relationship="HTMModel.FK_Service_ServiceType" FromRole="Service" ToRole="ServiceType" />
+        </EntityType>
+        <EntityType Name="ServiceType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="Services" Relationship="HTMModel.FK_Service_ServiceType" FromRole="ServiceType" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+        </EntityType>
         <EntityType Name="State">
           <Key>
             <PropertyRef Name="Id" />
@@ -570,6 +692,20 @@
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="Rooms" Relationship="HTMModel.FK_Room_RoomStatus" FromRole="Status" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedBy" Type="Int32" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Room_Bed">
           <End Type="HTMModel.Bed" Role="Bed" Multiplicity="0..1" />
@@ -676,6 +812,18 @@
             </Principal>
             <Dependent Role="RoomRate">
               <PropertyRef Name="room_TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Service_ServiceType">
+          <End Type="HTMModel.ServiceType" Role="ServiceType" Multiplicity="0..1" />
+          <End Type="HTMModel.Service" Role="Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ServiceTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -839,6 +987,48 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="HTMModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceTypes">
+            <EntityTypeMapping TypeName="HTMModel.ServiceType">
+              <MappingFragment StoreEntitySet="ServiceType">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="HTMModel.Source">
+              <MappingFragment StoreEntitySet="Source">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="HTMModel.State">
               <MappingFragment StoreEntitySet="State">
@@ -862,6 +1052,21 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Status1" ColumnName="Status" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HTMModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
