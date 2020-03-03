@@ -34,6 +34,8 @@ namespace DataModel.UnitOfWork
         private GenericRepository<ServiceType> _ServiceTypeRepository;
         private GenericRepository<Service> _ServiceRepository;
         private GenericRepository<User> _UserRepository;
+        private GenericRepository<Room> _RoomRepository;
+        private GenericRepository<Guest> _GuestRepository;
 
 
 
@@ -152,6 +154,24 @@ namespace DataModel.UnitOfWork
                 if (this._UserRepository == null)
                     this._UserRepository = new GenericRepository<User>(_context);
                 return _UserRepository;
+            }
+        }
+        public GenericRepository<Room> RoomRepository
+        {
+            get
+            {
+                if (this._RoomRepository == null)
+                    this._RoomRepository = new GenericRepository<Room>(_context);
+                return _RoomRepository;
+            }
+        }
+        public GenericRepository<Guest> GuestRepository
+        {
+            get
+            {
+                if (this._GuestRepository == null)
+                    this._GuestRepository = new GenericRepository<Guest>(_context);
+                return _GuestRepository;
             }
         }
 

@@ -230,8 +230,10 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\FloorController.cs" />
+    <Compile Include="Controllers\GuestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\ServiceTypeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
@@ -245,7 +247,9 @@
     <Compile Include="Models\CityModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\FloorModel.cs" />
+    <Compile Include="Models\GuestModel.cs" />
     <Compile Include="Models\HotelModel.cs" />
+    <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\RoomTypes.cs" />
     <Compile Include="Models\ServiceTypeModel.cs" />
     <Compile Include="Models\StateModel.cs" />
@@ -3246,6 +3250,12 @@
     <Content Include="Views\ServiceType\ServiceType.cshtml" />
     <Content Include="Views\Shared\_partialAddServiceType.cshtml" />
     <Content Include="Views\User\User.cshtml" />
+    <Content Include="Views\Shared\_partialAddUser.cshtml" />
+    <Content Include="Views\Room\Room.cshtml" />
+    <Content Include="Views\Shared\_partialAddRoom.cshtml" />
+    <Content Include="Views\Shared\_partialAddReceptionRoom.cshtml" />
+    <Content Include="Views\Guest\Guest.cshtml" />
+    <Content Include="Views\Shared\_partialAddGuest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -70,6 +70,18 @@
 </style>
 
 
+<style>
+    .openbtn {
+        /*font-size: 20px;*/
+        cursor: pointer;
+        background-color: burlywood;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        margin-top: -22px;
+        margin-left: 55px;
+    }
+</style>
 
 
 <script type="text/javascript">
@@ -105,42 +117,44 @@
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                <span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add Hotel</span>
+                @*<span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add Hotel</span>*@
+
+                <button class="openbtn" id="btn_new" onclick="openNav()" style="border-radius:8px;color:black">+Add New</button>
                 <span class="grid_head">
                     <span id="hdrDropdown">
                         @( Html.Kendo().DropDownList()
-                                           .Name("ActionDropdown")
-                                           .DataTextField("Text")
-                                           .DataValueField("Value")
-                                           .HtmlAttributes(new { style = "height: 27px;font-size:13px;" })
-                                           .OptionLabel("More Action")
-                                           .BindTo(new List<SelectListItem>() {
-                                                                              new SelectListItem() {
-                                                                                  Text =  "Activate",
-                                                                                  Value = "1"
+                                                           .Name("ActionDropdown")
+                                                           .DataTextField("Text")
+                                                           .DataValueField("Value")
+                                                           .HtmlAttributes(new { style = "height: 27px;font-size:13px;" })
+                                                           .OptionLabel("More Action")
+                                                           .BindTo(new List<SelectListItem>() {
+                                                                                                              new SelectListItem() {
+                                                                                                                  Text =  "Activate",
+                                                                                                                  Value = "1"
 
-                                                                              },
-                                                                               new SelectListItem() {
-                                                                                  Text = "Deactivate",
-                                                                                  Value = "2"
-                                                                              },
-                                                                              new SelectListItem() {
-                                                                                  Text = "Import",
-                                                                                  Value = "3"
-                                                                              },
+                                                                                                              },
+                                                                                                               new SelectListItem() {
+                                                                                                                  Text = "Deactivate",
+                                                                                                                  Value = "2"
+                                                                                                              },
+                                                                                                              new SelectListItem() {
+                                                                                                                  Text = "Import",
+                                                                                                                  Value = "3"
+                                                                                                              },
 
-                                                                               new SelectListItem() {
-                                                                                  Text = "Export",
-                                                                                  Value = "4"
-                                                                              },
-                                                                               new SelectListItem() {
-                                                                                  Text = "Refresh",
-                                                                                  Value = "5"
-                                                                              },
-                                                                                new SelectListItem() {
-                                                                                  Text = "Print",
-                                                                                  Value = "6"
-                                                                              }
+                                                                                                               new SelectListItem() {
+                                                                                                                  Text = "Export",
+                                                                                                                  Value = "4"
+                                                                                                              },
+                                                                                                               new SelectListItem() {
+                                                                                                                  Text = "Refresh",
+                                                                                                                  Value = "5"
+                                                                                                              },
+                                                                                                                new SelectListItem() {
+                                                                                                                  Text = "Print",
+                                                                                                                  Value = "6"
+                                                                                                              }
 })
 .Template("<img  src='https://kencloudadmin.blob.core.windows.net/kencloudecosysadmin/More Actions/" + "${Value}.png' width='15' height='15' />" + "<span style='margin-left: 5px;'>${Text}</span>"))
                     </span>
@@ -168,32 +182,32 @@
 <div class="row" id="chkBoxGrid" style=" margin-top:6px;
             margin-left: 146px;">
     @(Html.Kendo().Grid<HTMS.Models.HotelModel>()
-                            .Name("grid")
-                            .Columns(columns =>
-                            {
-                    //columns.Select().Width(30);
-                    //columns.Bound(p => p.id).Hidden();
-                    //columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
-                                columns.Bound(p => p.HotelName).Width(80).Title("HotelName").Width("30");
-                                columns.Bound(p => p.HotelNumber).Width(80).Title("HotelNumber");
-                               
-                                columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
-                    // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
-                    columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
+                                    .Name("grid")
+                                    .Columns(columns =>
+                                    {
+                            //columns.Select().Width(30);
+                            //columns.Bound(p => p.id).Hidden();
+                            //columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
+                            columns.Bound(p => p.HotelName).Width(80).Title("HotelName").Width("30");
+                                        columns.Bound(p => p.HotelNumber).Width(80).Title("HotelNumber");
 
-                            })
-                        .Editable(editable => editable.Mode(GridEditMode.PopUp))
-                         .Pageable()
-                        .Sortable()
-                        // .Events(ev => ev.Change("onChange"))
-                        // .PersistSelection()
-                        .DataSource(dataSource => dataSource
-                            .Ajax()
-                            .Model(model => model.Id(p => p.HotelNumber))
-                            .Read(read => read.Action("BindAllHotel", "Hotel"))
-                            .Update(update => update.Action("EditingPopup_Update", "Hotel"))
-                            .Destroy(update => update.Action("DeleteHotel", "Hotel"))
-                        )
+                                        columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+                            // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
+                            columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
+
+                                    })
+                                .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                 .Pageable()
+                                .Sortable()
+                                // .Events(ev => ev.Change("onChange"))
+                                // .PersistSelection()
+                                .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .Model(model => model.Id(p => p.HotelNumber))
+                                    .Read(read => read.Action("BindAllHotel", "Hotel"))
+                                    .Update(update => update.Action("EditingPopup_Update", "Hotel"))
+                                    .Destroy(update => update.Action("DeleteHotel", "Hotel"))
+                                )
     )
 
     <script>
@@ -229,17 +243,17 @@
 
 <div class="col-md-12">
     @(Html.Kendo().Window().Name("AddDetails")
-                                                                        .Title("Add Hotel ")
-                                                                        .Visible(false)
-                                                                        .Modal(true)
-                                                                        .Content(@<text>
-                                                                            <div style="width:100%" id="fieldlist">
-                                                                                @Html.Partial("_partialAddHotel")
-                                                                            </div>
-                                                                        </text>)
+                                                                                .Title("Add Hotel ")
+                                                                                .Visible(false)
+                                                                                .Modal(true)
+                                                                                .Content(@<text>
+                                                                                    <div style="width:100%" id="fieldlist">
+                                                                                        @Html.Partial("_partialAddHotel")
+                                                                                    </div>
+                                                                                </text>)
 
 
-                                                                                    .Actions(actions => actions.Close())
+                                                                                                    .Actions(actions => actions.Close())
 
     )
 </div>
@@ -335,9 +349,9 @@
 
                 Hotel_Name: $("#txtHotel").val(),
                 Hotel_Number: $("#txtHotelNumber").val(),
-               
+
                 Description: $("#txtDescription").val(),
-                
+
 
             }
             var model = {

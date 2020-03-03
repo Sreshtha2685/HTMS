@@ -17,14 +17,12 @@ namespace DataModel
         public int id { get; set; }
         public string Rate_Name { get; set; }
         public int room_TypeId { get; set; }
-        public int room_Rate_TypeId { get; set; }
         public string Description { get; set; }
         public Nullable<int> InsertedBy { get; set; }
         public Nullable<System.DateTime> InsertedOn { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
     
-        public virtual RoomRateType RoomRateType { get; set; }
         public virtual RoomType RoomType { get; set; }
     }
 }

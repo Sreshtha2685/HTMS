@@ -12,6 +12,7 @@ namespace HTMS.Models
         public int id { get; set; }
        
         public string UserName { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string Password { get; set; }
 
         public string UserRole { get; set; }

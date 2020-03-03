@@ -12,15 +12,19 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class RoomRateType
+    public partial class Guest
     {
-        public int id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Code { get; set; }
+        public int Id { get; set; }
+        public string GuestName { get; set; }
+        public Nullable<int> GuestContactNumber { get; set; }
+        public string GuestAddress { get; set; }
+        public string IdProof { get; set; }
         public string Description { get; set; }
+        public Nullable<int> RoomId { get; set; }
+        public Nullable<int> ServiceTypeId { get; set; }
         public Nullable<int> InsertedBy { get; set; }
         public Nullable<System.DateTime> InsertedOn { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public Nullable<bool> ISDelete { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     }
 }

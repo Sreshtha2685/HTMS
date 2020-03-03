@@ -133,7 +133,7 @@ namespace HTMS.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetRoomTypCityById(int id)
+        public ActionResult GetCityById(int id)
         {
             try
             {

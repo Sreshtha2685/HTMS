@@ -88,6 +88,8 @@ namespace WebApi.Controllers
                 {
                     UserId = country.Id,
                     UserRole = country.UserRole,
+                    UserName =country.UserName,
+                    Password =country.Password,
                     Description = country.Description,
                     InsertedBy = country.InsertedBy,
                     InsertedOn = country.InsertedOn,

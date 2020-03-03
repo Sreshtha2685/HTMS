@@ -214,13 +214,13 @@ namespace HTMS.Controllers
                     state.InsertedOn = ss.InsertedOn;
                     state.IsActive = true;
                     state.IsDelete = false;
-                    var res = new RestRequest("api/City/" + state.Id, Method.PUT) { RequestFormat = DataFormat.Json };
+                    var res = new RestRequest("api/State/" + state.Id, Method.PUT) { RequestFormat = DataFormat.Json };
                     res.AddJsonBody(state);
                     var response = _client.Execute<List<State>>(res);
 
                     if (response.Data == null)
                         throw new Exception(response.ErrorMessage);
-                    return Json(new { result = "RoomType", res = "" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { result = "State", res = "" }, JsonRequestBehavior.AllowGet);
 
                 }
                 else

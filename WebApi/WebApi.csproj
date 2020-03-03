@@ -258,7 +258,9 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\FloorController.cs" />
+    <Compile Include="Controllers\GuestController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\ServiceTypeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
@@ -271,7 +273,9 @@
     <Compile Include="Models\CityModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\FloorModel.cs" />
+    <Compile Include="Models\GuestModel.cs" />
     <Compile Include="Models\HotelModel.cs" />
+    <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\RoomTypeModel.cs" />
     <Compile Include="Models\ServiceTypeModel.cs" />
     <Compile Include="Models\StateModel.cs" />

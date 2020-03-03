@@ -15,6 +15,11 @@ namespace HTMS
     {
         protected void Application_Start()
         {
+            HttpConfiguration config = GlobalConfiguration.Configuration;
+
+            config.Formatters.JsonFormatter
+                        .SerializerSettings
+                        .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
             SwaggerConfig.Register();
             AreaRegistration.RegisterAllAreas();

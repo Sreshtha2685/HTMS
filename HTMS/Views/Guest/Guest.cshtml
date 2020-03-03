@@ -1,33 +1,20 @@
-﻿
-@model HTMS.Models.FloorModel
-@using Kendo.Mvc.UI
+﻿@using Kendo.Mvc.UI;
+@using DataModel;
 @{
-    ViewBag.Title = "Floor";
+    /**/
+
+    ViewBag.Title = "Guest";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <style>
     .k-button k-button-icontext k-grid-edit, k-button k-button-icontext k-grid-delete {
         background-color: burlywood;
     }
 
-    div.k-window {
-        display: inline-block;
-        position: absolute;
-        width: 500px;
-        z-index: 10001;
-        border-style: solid;
-        border-width: 1px;
-        padding-top: 2em;
+    .k-window-content k-content {
+        overflow: auto;
     }
-
-    div.k-window-content {
-        position: relative;
-        height: 100%;
-        padding: .58em;
-        outline: 0;
-    }
-
-
 
     #grid1 {
         margin-top: 35px;
@@ -54,8 +41,8 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/kendo/kendo.web.min.js"></script>
     <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
-    <script src="~/Scripts/kendo/kendo.all.min.js"></script>*@
-
+    <script src="~/Scripts/kendo/kendo.all.min.js"></script>
+    <link href="~/CSS/css/style.css" rel="stylesheet" />*@
 
 <style>
     .openbtn {
@@ -68,6 +55,29 @@
         margin-top: -22px;
         margin-left: 55px;
     }
+</style>
+<style>
+    div.k-window {
+        display: inline-block;
+        position: absolute;
+        width: 500px;
+        margin-left: -19px;
+        z-index: 10001;
+        border-style: solid;
+        border-width: 1px;
+        padding-top: 2em;
+        left: -6px;
+        margin-top: -1px;
+    }
+
+    /*div.k-window-content {
+        position: relative;
+        height: 100%;
+        padding: .58em;
+        outline: 0;
+    }*/
+
+
 </style>
 
 
@@ -95,27 +105,24 @@
 </script>
 
 
-<style>
-</style>
-
 
 <div class="row content_start">
     @******************toolbar start****************************@
     <div class="row">
 
         <div class="row">
-            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive"> Floor</span></div>
+            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive">Guest</span></div>
         </div>
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                @*<span class="grid_head" id="btn_new" style="margin-left:45px;">&#43; Add Floor</span>*@
+                @*<span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add Room</span>*@
 
                 <button class="openbtn" id="btn_new" onclick="openNav()" style="border-radius:8px;color:black">+Add New</button>
 
                 <span class="grid_head">
                     <span id="hdrDropdown">
-                        @( Html.Kendo().DropDownList()
+                        @(Html.Kendo().DropDownList()
                                                                                    .Name("ActionDropdown")
                                                                                    .DataTextField("Text")
                                                                                    .DataValueField("Value")
@@ -170,33 +177,39 @@
     </div>
 </div>
 
-@********************************Grid************************************@
+@*------------------------grid-----------------------------------------*@
+
 <div class="row" id="chkBoxGrid" style=" margin-top:6px;
-            margin-left: 141px;">
-    @(Html.Kendo().Grid<HTMS.Models.FloorModel>()
-                                                    .Name("grid")
-                                                    .Columns(columns =>
-                                                    {
+            margin-left: 146px;">
+    @(Html.Kendo().Grid<HTMS.Models.GuestModel>()
+                                                            .Name("grid")
+                                                            .Columns(columns =>
+                                                            {
+                                                                //columns.Select().Width(30);
+                                                                //columns.Bound(p => p.id).Hidden();
+                                                                // columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
+                                                                columns.Bound(p => p.GuestName).Width(80).Title("GuestName").Width("30");
+                                                                columns.Bound(p => p.GuestAddress).Width(80).Title("FloorNo");
+                                                                columns.Bound(p => p.GuestContactNumber).Width(80).Title("BedNo");
+                                                                columns.Bound(p => p.IdProof).Width(80).Title("RoomStatus");
+                                                                columns.Bound(p => p.Description).Width(80).Title("RoomStatus");
+                                                                columns.Bound(p => p.RoomId).Width(80).Title("Description").Width("30");
+                                                                // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
+                                                                columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
-                                                        columns.Bound(p => p.FloorNumber).Width(80).Title("FloorNumber").Width("30");
-
-                                                        columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
-
-                                                        columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
-
-                                                    })
-                                                .Editable(editable => editable.Mode(GridEditMode.PopUp))
-                                                 .Pageable()
-                                                .Sortable()
-                                                // .Events(ev => ev.Change("onChange"))
-                                                // .PersistSelection()
-                                                .DataSource(dataSource => dataSource
-                                                    .Ajax()
-                                                    .Model(model => model.Id(p => p.Id))
-                                                    .Read(read => read.Action("BindAllFloor", "Floor"))
-                                                    .Update(update => update.Action("EditingPopup_Update", "Floor"))
-                                                    .Destroy(update => update.Action("DeleteFloor", "Floor"))
-                                                )
+                                                            })
+                                                        .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                                         .Pageable()
+                                                        .Sortable()
+                                                        // .Events(ev => ev.Change("onChange"))
+                                                        // .PersistSelection()
+                                                        .DataSource(dataSource => dataSource
+                                                            .Ajax()
+                                                            .Model(model => model.Id(p => p.Id))
+                                                            .Read(read => read.Action("BindAllGuest", "Guest"))
+                                                            .Update(update => update.Action("EditingPopup_Update", "Guest"))
+                                                            .Destroy(update => update.Action("DeleteGuest", "Guest"))
+                                                        )
     )
 
     <script>
@@ -213,7 +226,6 @@
         }
     </style>
 </div>
-
 
 
 @*======================================================<  Add new Part    >=====================================*@
@@ -233,16 +245,16 @@
 
 <div class="col-md-12">
     @(Html.Kendo().Window().Name("AddDetails")
-                                                   .Title("Add Country ")
-                                                    .Visible(false)
-                                                  .Modal(true)
-                                                  .Content(@<text>
-                                                    <div style="width:100%" id="fieldlist">
-                                                        @Html.Partial("_partialAddFloor")
-                                                    </div>
-                                                </text>)
+                                                                                                .Title("Add Guest ")
+                                                                                                .Visible(false)
+                                                                                                .Modal(true)
+                                                                                                .Content(@<text>
+                                                                                                    <div style="width:100%" id="fieldlist">
+                                                                                                        @Html.Partial("_partialAddGuest")
+                                                                                                    </div>
+                                                                                                </text>)
 
-                                                                  .Actions(actions => actions.Close())
+                                                                                                .Actions(actions => actions.Close())
 
     )
 </div>
@@ -265,44 +277,13 @@
 
 
 
-
-
-@*----------------------sidenav-----------------------------------------------*@
-
-
-
-
-@*<section id="addnew">
-
-        <div id="mySidebar" class="sidebar">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-
-        </div>
-
-
-
-    </section>
-    <script>
-        function openNav() {
-            // alert("hii");
-            document.getElementById("mySidebar").style.width = "350px";
-            document.getElementById("main").style = "350px";
-        }
-
-        function closeNav() {
-            debugger;
-            document.getElementById("mySidebar").style.width = "0";
-            document.getElementById("main").style = "0";
-        }
-    </script>*@
-
 @*-----------------------------Add function---------------------------------*@
 
 <script type="text/javascript">
 
     function btnSave_Click() {
         debugger;
-        //  alert("hii");
+
         var validator = $('#save-container').kendoValidator().data("kendoValidator");
 
 
@@ -311,10 +292,15 @@
 
             var prdModel = {
 
-                Floor_Number: $("#txtFloor").val(),
-
+                GuestName: $("#txtGuestName").val(),
+                GuestContactNumber: $("#txtGuestContactNumber").val(),
+                GuestAddress: $("#txtGuestAddress").val(),
+                IdProof: $("#txtIdProof").val(),
                 Description: $("#txtDescription").val(),
-
+                RoomId: $("#txtRoomId").val(),
+                ServiceTypeId: $("#txtServiceTypeId").val(),
+                Description: $("#txtDescription").val(),
+                //  CountryId: $("#txtbed").val(),
 
             }
             var model = {
@@ -322,7 +308,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: "/Floor/AddFloor",
+                url: "/Guest/AddGuest",
 
                 data: model,
                 dataType: "json",
@@ -333,7 +319,7 @@
 
                         // btnReset_Click();
                         // location.reload();
-                        alert("Floor added Successfully");
+                        alert("Guest added Successfully");
                         location.reload();
                         var grid = $('#grid').data("kendoGrid");
                         grid.dataSource.read();

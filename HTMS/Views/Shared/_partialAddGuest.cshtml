@@ -1,0 +1,222 @@
+﻿@using Kendo.Mvc.UI;
+@{
+    ViewBag.Title = "_partialAddRoom";
+    Layout = null;
+}
+
+<style>
+    .control-label {
+        font-family: auto;
+    }
+
+    .k-textbox {
+        width: 228px;
+    }
+
+    #id, #IsChecked {
+        display: none;
+    }
+
+    .id {
+        display: none;
+    }
+</style>
+
+<form id="AddForm">
+    <div id="save-container" style="margin-left: -16px">
+
+        <div class="col-lg-12">
+
+            <div class="col-lg-6">
+                @Html.Label("GuestName:", htmlAttributes: new { @class = "control-label", required = "required", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-64px;margin-top:10px">
+                <input type="text" id="txtGuestName" value="" style="width:221px;height: 23px;border-radius: 4px;">
+
+            </div>
+        </div>
+
+
+        <div class="clearfix" style="padding-bottom: 10px;"></div>
+
+        <div class="col-lg-12">
+            <div class="col-lg-6" style="margin-top:7px">
+                @Html.Label("GuestContactNumber:", htmlAttributes: new { @class = "control-label", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
+
+                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
+
+                <input type="number" id="txtGuestContactNumber" value="" style="width:221px;height: 23px;border-radius: 4px;">
+            </div>
+
+        </div>
+        <div class="clearfix" style="padding-bottom: 10px;"></div>
+
+        <div class="col-lg-12">
+            <div class="col-lg-6" style="margin-top:7px">
+                @Html.Label("GuestAddress:", htmlAttributes: new { @class = "control-label", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
+
+                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
+                <input type="text" id="txtGuestAddress" value="" style="width:221px;height: 23px;border-radius: 4px;">
+
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+            <div class="col-lg-6" style="margin-top:7px">
+                @Html.Label("IdProof:", htmlAttributes: new { @class = "control-label", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
+
+                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
+                <input type="checkbox" id="AadharCard" class="k-checkbox" checked="checked">
+                <label class="k-checkbox-label" for="eq1">AadharCard</label>
+                <input type="checkbox" id="PANCard" class="k-checkbox" checked="checked">
+                <label class="k-checkbox-label" for="eq1">PAN Card</label>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="col-lg-6" style="margin-top:7px">
+                @Html.Label("Room:", htmlAttributes: new { @class = "control-label", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
+
+                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
+
+                @(Html.Kendo().DropDownList()
+                                                                                 .Name("txtRoom")
+                                                                                 .DataTextField("Room_Number")
+                                                                                 .DataValueField("id")
+                                                                                 .DataSource(source =>
+                                                                                 {
+                                                                                     source.Read(read =>
+                                                                                     {
+                                                                                         read.Action("Room_Read", "Guest");
+                                                                                     });
+                                                                                 })
+                                                                                .HtmlAttributes(new { style = "width:224px" })
+                )
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="col-lg-6" style="margin-top:7px">
+                @Html.Label("ServiceType:", htmlAttributes: new { @class = "control-label", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
+
+                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
+
+                @(Html.Kendo().DropDownList()
+                                                                                 .Name("txtServiceType")
+                                                                                 .DataTextField("ServiceTypeName")
+                                                                                 .DataValueField("id")
+                                                                                 .DataSource(source =>
+                                                                                 {
+                                                                                     source.Read(read =>
+                                                                                     {
+                                                                                         read.Action("ServiceType_Read", "Guest");
+                                                                                     });
+                                                                                 })
+                                                                                .HtmlAttributes(new { style = "width:224px" })
+                )
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+            <div class="col-lg-6" style="margin-top:7px">
+                @Html.Label("Description:", htmlAttributes: new { @class = "control-label", })
+                <span class="required" style="color:red">*</span>
+            </div>
+
+            <div class="col-lg-6" style="margin-left:-63px;margin-top:10px">
+
+                @*<input type="number" id="txtbed" name="quantity" min="1" max="100" style="width:221px;height: 23px;margin-top:10px;border-radius: 4px;">*@
+
+                <input type="text" id="txtDescription" value="" style="width:221px;height: 23px;border-radius: 4px;">
+            </div>
+
+        </div>
+    </div>
+    <div class="clearfix" style="padding-bottom: 10px;"></div>
+
+    <div class="row" style="margin-top:5px"></div>
+    <div class="rowbtn" style="margin-left: 219px;
+    margin-top: 28px;">
+        @*@(Html.Kendo().Button()
+                              .Name("btnSave")
+                              .Content("Save")
+                              .HtmlAttributes(new { type = "button", @class = "btn btn-primary", style = "height:35px;width:70px;" })
+                              .Events(e => e.Click("btnSave_Click"))
+            )*@
+        <button id="btnSave" class="k-primary" onclick="btnSave_Click()" style="border-color: darkslategrey;background-color: darkslategray;">Save</button>
+
+
+
+        @*@(Html.Kendo().Button()
+                               .Name("btnReset")
+                               .Content("Reset")
+                                             .HtmlAttributes(new { type = "button", @class = "btn btn-default", style = "height:35px;width:70px;" })
+                             .Events(e => e.Click("btnReset_Click"))
+            )*@
+
+        <button id="btnReset" class="k-primary k-button" onclick="btnReset_Click()" style="border-color: darkslategrey;background-color: darkslategray;">Reset</button>
+
+    </div>
+</form>
+
+
+
+<script>
+
+    function btnReset_Click() {
+        debugger
+
+        document.getElementById("txtGuestName").value = "";
+        document.getElementById("txtGuestContactNumber").value = "";
+        document.getElementById("txtRoom").value = "";
+        document.getElementById("txtServiceType").value = "";
+        document.getElementById("txtDescription").value = "";
+    
+
+
+        $("#btnSave").kendoButton({}).data("kendoButton").enable(true);
+        var wnd = $("#AddDetails").data("kendoWindow");
+        wnd.element.find("span.k-tooltip-validation").hide();
+        return;
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        // The Name() of the DropDownList is used to get its client-side instance.
+        var dropdownlist = $("#txtRoom").data("kendoDropDownList");
+        console.log(dropdownlist);
+    });
+</script>
+
+

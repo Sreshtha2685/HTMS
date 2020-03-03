@@ -79,7 +79,7 @@ namespace HTMS.Controllers
                 if (res.IsSuccessStatusCode)
                 {
                     LstAllCountry = res.Content.ReadAsAsync<List<Country>>().Result.ToList();
-                    return LstAllCountry.Where(a => a.IsActive == true && a.IsDelete == false).OrderByDescending(a => a.InsertedOn).ToList(); ;
+                    return LstAllCountry.Where(a => a.IsActive == true && a.IsDelete == false).OrderByDescending(a => a.InsertedOn).ToList(); 
                 }
                 else
                 {

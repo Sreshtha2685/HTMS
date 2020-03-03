@@ -187,7 +187,7 @@ namespace HTMS.Controllers
             try
             {
                 string result = "fail";
-                var ss = GetAllUser().ToList().Where(a => a.UserId == state.UserId).FirstOrDefault();
+                var ss = GetAllUser().ToList().Where(a => a.UserId== state.UserId).FirstOrDefault();
                 if (ss != null)
                 {
                     state.InsertedBy = ss.InsertedBy;

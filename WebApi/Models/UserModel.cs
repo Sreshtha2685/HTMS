@@ -10,6 +10,7 @@ namespace WebApi.Models
         public int Id { get; set; }
         public string UserRole{ get; set; }
         public string UserName { get; set; }
+        public string Password { get; set; }
         public string Description { get; set; }
         public int InsertedBy { get; set; }
         public DateTime InsertedOn { get; set; }

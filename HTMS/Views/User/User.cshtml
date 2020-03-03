@@ -100,12 +100,12 @@
     <div class="row">
 
         <div class="row">
-            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive"> State</span></div>
+            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive"> User</span></div>
         </div>
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                <span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add State</span>
+                <span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add User</span>
                 <span class="grid_head">
                     <span id="hdrDropdown">
                         @( Html.Kendo().DropDownList()
@@ -177,7 +177,7 @@
                             columns.Bound(p => p.UserName).Width(80).Title("UserName").Width("30");
                             columns.Bound(p => p.UserRole).Width(80).Title("UserRole");
                             columns.Bound(p => p.Password).Width(80).Title("Password");
-                            columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+                            //columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
                             // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
                             columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
@@ -263,61 +263,6 @@
 
 
 
-@*<script type="text/javascript">
-        function btnSave_Click() {
-            debugger;
-            var validator = $("#save-container").kendoValidator().data("kendoValidator");
-            if (validator.validate()) {
-                var roomtypeModel = {
-
-                    RoomName: $('#txtroomtype').val(),
-                    Max_Adult_No: $('#txtadult').val(),
-                    Max_Child_No: $('#txtchild').val(),
-                    BedId: $('#txtbed').val(),
-                    Description: $('#txtroomstatus').val(),
-                    RoomStatusId: $('#txtbed').val(),
-
-
-                }
-                var model = {
-                    "about": roomtypeModel
-                }
-                $.ajax({
-
-                    type: "POST",
-                    url: "/RoomType/AddRoomType",
-                    data: model,
-                    datatype: "json",
-                   // contentType: "application/json; charset=utf-8",
-                    cache: false,
-                    success: function (data) {
-
-                    },
-                });
-                //btnReset_Click();
-                var wnd = $("#AddDetails").data("kendoWindow");
-                wnd.center().close();
-                //alert("Added successfully!");
-                var grid = $('#grid').data('kendoGrid');
-                grid.dataSource.read();
-            }
-            else {
-                return false;
-            }
-        }
-        //function btnReset_Click() {
-        //    debugger
-        //    document.getElementById("txtHeader").value = "";
-        //    $(".k-upload-files.k-reset").find("li").remove();
-        //    $(".k-upload-status-total").remove();
-
-        //    $('#imgadd').attr('src', '');
-
-        //    document.getElementById("txtContactDescription").value = "";
-        //   return;
-        //}
-    </script>*@
-
 @*-----------------------------Add function---------------------------------*@
 
 <script type="text/javascript">
@@ -333,10 +278,10 @@
 
             var prdModel = {
 
-                UserName: $("#txtUserName").val(),
-                UserRole: $("#txtUserRole").val(),
-                Description: $("#txtDescription").val(),
-                Password: $("#txtPassword").val(),
+                UserName: $("#txtUser").val(),
+                UserRole: $("#txtRole").val(),
+               // Description: $("#txtDescription").val(),
+                Password: $("#txtPass").val(),
 
 
             }

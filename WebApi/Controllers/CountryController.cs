@@ -41,12 +41,14 @@ namespace WebApi.Controllers
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, lst);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                throw ex;
+                //return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
         }
+
 
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the item to be retrieved</param>
         /// <returns></returns>
-        
+
         // GET: api/Country/5
         public HttpResponseMessage GetCountry(int id)
         {

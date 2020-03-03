@@ -22,10 +22,15 @@ namespace DataModel
         public Nullable<int> RoomNumber { get; set; }
         public Nullable<int> RoomStatusId { get; set; }
         public string Description { get; set; }
+        public Nullable<int> InsertedBy { get; set; }
+        public Nullable<System.DateTime> InsertedOn { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     
         public virtual Bed Bed { get; set; }
         public virtual Floor Floor { get; set; }
         public virtual Hotel Hotel { get; set; }
         public virtual Status Status { get; set; }
+        public virtual RoomType RoomType { get; set; }
     }
 }

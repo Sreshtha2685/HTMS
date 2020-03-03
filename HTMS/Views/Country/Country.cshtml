@@ -48,18 +48,41 @@
     }
 </style>
 @*<link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
-<link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/kendo/kendo.web.min.js"></script>
-<script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
-<script src="~/Scripts/kendo/kendo.all.min.js"></script>*@
+    <link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.web.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.all.min.js"></script>*@
+
+<!-- javascripts -->
+<script src="CSS/js/jquery.js"></script>
+<script src="CSS/js/jquery-ui-1.10.4.min.js"></script>
+<script src="CSS/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="CSS/js/jquery-ui-1.9.2.custom.min.js"></script>
 
 
+<!-- bootstrap -->
+<script src="CSS/js/bootstrap.min.js"></script>
+<!-- nice scroll -->
+<script src="CSS/js/jquery.scrollTo.min.js"></script>
+<script src="CSS/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="CSS/js/jquery.customSelect.min.js"></script>
+<script src="CSS/js/scripts.js"></script>
 
-
-
+<style>
+    .openbtn {
+        /*font-size: 20px;*/
+        cursor: pointer;
+        background-color: burlywood;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        margin-top: -22px;
+        margin-left: 55px;
+    }
+</style>
 
 <script type="text/javascript">
     function show(input) {
@@ -97,42 +120,45 @@
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                <span class="grid_head" id="btn_new" style="margin-left:45px;">&#43; Add Country</span>
+
+                <button class="openbtn" id="btn_new"  onclick="openNav()" style="border-radius:8px;color:black">+Add New</button>
+
+                @*<span class="grid_head" id="btn_new" style="margin-left:45px;">&#43; Add Country</span>*@
                 <span class="grid_head">
                     <span id="hdrDropdown">
                         @( Html.Kendo().DropDownList()
-                                                           .Name("ActionDropdown")
-                                                           .DataTextField("Text")
-                                                           .DataValueField("Value")
-                                                           .HtmlAttributes(new { style = "height: 27px;font-size:13px;" })
-                                                           .OptionLabel("More Action")
-                                                           .BindTo(new List<SelectListItem>() {
-                                                                                                              new SelectListItem() {
-                                                                                                                  Text =  "Activate",
-                                                                                                                  Value = "1"
+                                                                                           .Name("ActionDropdown")
+                                                                                           .DataTextField("Text")
+                                                                                           .DataValueField("Value")
+                                                                                           .HtmlAttributes(new { style = "height: 27px;font-size:13px;" })
+                                                                                           .OptionLabel("More Action")
+                                                                                           .BindTo(new List<SelectListItem>() {
+                                                                                                                                                                              new SelectListItem() {
+                                                                                                                                                                                  Text =  "Activate",
+                                                                                                                                                                                  Value = "1"
 
-                                                                                                              },
-                                                                                                               new SelectListItem() {
-                                                                                                                  Text = "Deactivate",
-                                                                                                                  Value = "2"
-                                                                                                              },
-                                                                                                              new SelectListItem() {
-                                                                                                                  Text = "Import",
-                                                                                                                  Value = "3"
-                                                                                                              },
+                                                                                                                                                                              },
+                                                                                                                                                                               new SelectListItem() {
+                                                                                                                                                                                  Text = "Deactivate",
+                                                                                                                                                                                  Value = "2"
+                                                                                                                                                                              },
+                                                                                                                                                                              new SelectListItem() {
+                                                                                                                                                                                  Text = "Import",
+                                                                                                                                                                                  Value = "3"
+                                                                                                                                                                              },
 
-                                                                                                               new SelectListItem() {
-                                                                                                                  Text = "Export",
-                                                                                                                  Value = "4"
-                                                                                                              },
-                                                                                                               new SelectListItem() {
-                                                                                                                  Text = "Refresh",
-                                                                                                                  Value = "5"
-                                                                                                              },
-                                                                                                                new SelectListItem() {
-                                                                                                                  Text = "Print",
-                                                                                                                  Value = "6"
-                                                                                                              }
+                                                                                                                                                                               new SelectListItem() {
+                                                                                                                                                                                  Text = "Export",
+                                                                                                                                                                                  Value = "4"
+                                                                                                                                                                              },
+                                                                                                                                                                               new SelectListItem() {
+                                                                                                                                                                                  Text = "Refresh",
+                                                                                                                                                                                  Value = "5"
+                                                                                                                                                                              },
+                                                                                                                                                                                new SelectListItem() {
+                                                                                                                                                                                  Text = "Print",
+                                                                                                                                                                                  Value = "6"
+                                                                                                                                                                              }
 })
 .Template("<img  src='https://kencloudadmin.blob.core.windows.net/kencloudecosysadmin/More Actions/" + "${Value}.png' width='15' height='15' />" + "<span style='margin-left: 5px;'>${Text}</span>"))
                     </span>
@@ -159,29 +185,29 @@
 <div class="row" id="chkBoxGrid" style=" margin-top:6px;
             margin-left: 141px;">
     @(Html.Kendo().Grid<HTMS.Models.CountryModel>()
-                                    .Name("grid")
-                                    .Columns(columns =>
-                                    {
+                                                            .Name("grid")
+                                                            .Columns(columns =>
+                                                            {
 
-                                        columns.Bound(p => p.CountryName).Width(80).Title("RoomName").Width("30");
+                                                                columns.Bound(p => p.CountryName).Width(80).Title("RoomName").Width("30");
 
-                                       // columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+                                                    // columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
 
-                                        columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
+                                                    columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
-                                    })
-                                .Editable(editable => editable.Mode(GridEditMode.PopUp))
-                                 .Pageable()
-                                .Sortable()
-                                // .Events(ev => ev.Change("onChange"))
-                                // .PersistSelection()
-                                .DataSource(dataSource => dataSource
-                                    .Ajax()
-                                    .Model(model => model.Id(p => p.CountryName))
-                                    .Read(read => read.Action("BindAllCountry", "Country"))
-                                    .Update(update => update.Action("EditingPopup_Update", "Country"))
-                                    .Destroy(update => update.Action("DeleteCountry", "Country"))
-                                )
+                                                            })
+                                                        .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                                         .Pageable()
+                                                        .Sortable()
+                                                        // .Events(ev => ev.Change("onChange"))
+                                                        // .PersistSelection()
+                                                        .DataSource(dataSource => dataSource
+                                                            .Ajax()
+                                                            .Model(model => model.Id(p => p.CountryName))
+                                                            .Read(read => read.Action("BindAllCountry", "Country"))
+                                                            .Update(update => update.Action("EditingPopup_Update", "Country"))
+                                                            .Destroy(update => update.Action("DeleteCountry", "Country"))
+                                                        )
     )
 
     <script>
@@ -218,16 +244,16 @@
 
 <div class="col-md-12">
     @(Html.Kendo().Window().Name("AddDetails")
-                                   .Title("Add Country ")
-                                    .Visible(false)
-                                  .Modal(true)
-                                  .Content(@<text>
-                                    <div style="width:100%" id="fieldlist">
-                                        @Html.Partial("_partialAddCountry")
-                                    </div>
-                                </text>)
+                                                           .Title("Add Country ")
+                                                            .Visible(false)
+                                                          .Modal(true)
+                                                          .Content(@<text>
+                                                            <div style="width:100%" id="fieldlist">
+                                                                @Html.Partial("_partialAddCountry")
+                                                            </div>
+                                                        </text>)
 
-                                      .Actions(actions => actions.Close())
+                                                                                .Actions(actions => actions.Close())
 
     )
 </div>
@@ -297,9 +323,9 @@
             var prdModel = {
 
                 CountryName: $("#txtCountry").val(),
-               
+
                 Description: $("#txtDescription").val(),
-               
+
 
             }
             var model = {

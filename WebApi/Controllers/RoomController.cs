@@ -1,4 +1,5 @@
-﻿using BusinessService.Interface;
+﻿
+using BusinessService.Interface;
 using BusinessService.Service;
 using DataModel;
 using Newtonsoft.Json.Linq;
@@ -13,26 +14,24 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class StateController : ApiController
+    public class RoomController : ApiController
     {
-
-        private readonly IStateService _StateService;
+        private readonly IRoomService _RoomService;
         private HTMEntities3 db = new HTMEntities3();
 
-        public StateController()
+        public RoomController()
         {
-            _StateService = new StateService();
+            _RoomService = new RoomService();
         }
         /// <summary>
         /// Retrieves the list of values
         /// </summary>
         /// <returns></returns>
-        // GET: api/State
-        public HttpResponseMessage GetState()
-        { 
+        public HttpResponseMessage GetRoom()
+        {
             try
             {
-                var lst = _StateService.GetAllState();
+                var lst = _RoomService.GetAllRoom();
                 if (lst != null)
                 {
                     return new HttpResponseMessage()
@@ -44,11 +43,10 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-
                 throw ex;
                 //return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
-            
+
         }
 
 
@@ -58,15 +56,15 @@ namespace WebApi.Controllers
         /// <param name=<em>"id"</em>>The id of the item to be retrieved</param>
         /// <returns></returns>
 
-        // GET: api/State/5
-        public HttpResponseMessage GetState(int id)
+        // GET: api/Room/5
+        public HttpResponseMessage GetRoom(int id)
         {
             try
             {
-                var Temp = _StateService.GetStateById(id);
+                var Temp = _RoomService.GetRoomById(id);
                 if (Temp != null)
                     return Request.CreateResponse(HttpStatusCode.OK, Temp);
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Customer found for this id");
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Room found for this id");
             }
             catch (Exception)
             {
@@ -79,18 +77,23 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name=<em>"value"</em>>New value to be inserted</param>
         // POST: api/Country
-        public IHttpActionResult Post(StateModel country)
+        public IHttpActionResult Post(RoomModel country)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Not a valid model");
 
             using (var ctx = new HTMEntities3())
             {
-                ctx.States.Add(new State()
+                ctx.Rooms.Add(new Room()
                 {
-                    Id = country.Id,
-                    CityId =country.CityId,
-                    StateName = country.StateName,
+                    id = country.id,
+                    RoomNumber = country.RoomNumber,
+                    RoomStatusId = country.RoomStatusId,
+                    BedId = country.BedId,
+                    FloorId = country.FloorId,
+                    HotelId = country.HotelId,
+                    RoomTypeId = country.RoomTypeId,
+                    Description = country.Description,
                     InsertedBy = country.InsertedBy,
                     InsertedOn = country.InsertedOn,
                     IsActive = country.IsActive,
@@ -103,21 +106,21 @@ namespace WebApi.Controllers
 
             return Ok();
         }
-       
+
         /// <summary>
         /// Change a single value in the list
         /// </summary>
         /// <param name=<em>"id"</em>>The id of the value to be changed</param>
         /// <param name=<em>"value"</em>>The new value</param>
-        // PUT: api/Country/5
-        public HttpResponseMessage Put(int id, [FromBody]State obj)
+        // PUT: api/Room/5
+        public HttpResponseMessage Put(int id, [FromBody]Room obj)
         {
             try
             {
-                State res = null;
+                Room res = null;
                 if (id >= 0)
                 {
-                    res = _StateService.UpdateState(id, obj);
+                    res = _RoomService.UpdateRoom(id, obj);
                 }
                 if (res != null)
                     return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -136,13 +139,12 @@ namespace WebApi.Controllers
         /// Delete an item from the list
         /// </summary>
         /// <param name=<em>"id"</em>>id of the item to be deleted</param>
-        // DELETE: api/Country/5
+        // DELETE: api/Room/5
         public bool Delete(int id)
         {
             if (id >= 0)
-                return _StateService.DeleteState(id);
+                return _RoomService.DeleteRoom(id);
             return false;
         }
-
     }
 }

@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "City";
+    ViewBag.Title = "Room";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -43,6 +43,7 @@
     <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
     <script src="~/Scripts/kendo/kendo.all.min.js"></script>
     <link href="~/CSS/css/style.css" rel="stylesheet" />*@
+
 <style>
     .openbtn {
         /*font-size: 20px;*/
@@ -55,8 +56,6 @@
         margin-left: 55px;
     }
 </style>
-
-
 <style>
     div.k-window {
         display: inline-block;
@@ -112,17 +111,18 @@
     <div class="row">
 
         <div class="row">
-            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive"> City</span></div>
+            <div class="head-left breadcrumbs">Hotel Management &gt;<span class="breadcrumbsActive"> Room</span></div>
         </div>
 
         <div class="row ribbon">
             <div class="col-sm-6 hdrLeft" style="margin-top: 60px;margin-left: 117px;">
-                @*<span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add City</span>*@
+                @*<span class="grid_head" id="btn_new" style="margin-left:59px;">&#43; Add Room</span>*@
 
                 <button class="openbtn" id="btn_new" onclick="openNav()" style="border-radius:8px;color:black">+Add New</button>
+
                 <span class="grid_head">
                     <span id="hdrDropdown">
-                        @( Html.Kendo().DropDownList()
+                        @(Html.Kendo().DropDownList()
                                                            .Name("ActionDropdown")
                                                            .DataTextField("Text")
                                                            .DataValueField("Value")
@@ -181,18 +181,18 @@
 
 <div class="row" id="chkBoxGrid" style=" margin-top:6px;
             margin-left: 146px;">
-    @(Html.Kendo().Grid<HTMS.Models.CityModel>()
+    @(Html.Kendo().Grid<HTMS.Models.RoomModel>()
                                     .Name("grid")
                                     .Columns(columns =>
                                     {
                             //columns.Select().Width(30);
                             //columns.Bound(p => p.id).Hidden();
                             // columns.Bound(p => p.IsChecked).ClientTemplate("<input type='checkbox' id='chkbox' class='chkbox' /> ").Title("").Width(2).Filterable(false);
-                            columns.Bound(p => p.CityName).Width(80).Title("CityName").Width("30");
-                                        columns.Bound(p => p.StateName).Width(80).Title("StateName");
-                                        columns.Bound(p => p.CountryName).Width(80).Title("ContryName");
-                            //   columns.Bound(p => p.BedId).Width(80).Title("BedNo");
-                            // columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
+                            columns.Bound(p => p.RoomNumber).Width(80).Title("RoomNumber").Width("30");
+                             columns.Bound(p => p.FloorId).Width(80).Title("FloorNo");
+                           columns.Bound(p => p.BedId).Width(80).Title("BedNo");
+                             columns.Bound(p => p.RoomStatusId).Width(80).Title("RoomStatus");
+                             columns.Bound(p => p.Description).Width(80).Title("Description").Width("30");
                             // columns.Bound(p => p.InsertedOn).Width(260).Title("InsertedOn");
                             columns.Command(command => { command.Edit(); command.Destroy(); }).Title("Actions").Width("30");
 
@@ -204,10 +204,10 @@
                                 // .PersistSelection()
                                 .DataSource(dataSource => dataSource
                                     .Ajax()
-                                    .Model(model => model.Id(p => p.CityName))
-                                    .Read(read => read.Action("BindAllCity", "City"))
-                                    .Update(update => update.Action("EditingPopup_Update", "City"))
-                                    .Destroy(update => update.Action("Deletecity", "City"))
+                                    .Model(model => model.Id(p => p.id))
+                                    .Read(read => read.Action("BindAllRoom", "Room"))
+                                    .Update(update => update.Action("EditingPopup_Update", "Room"))
+                                    .Destroy(update => update.Action("DeleteRoom", "Room"))
                                 )
     )
 
@@ -249,7 +249,7 @@
                                                                                 .Modal(true)
                                                                                 .Content(@<text>
                                                                                     <div style="width:100%" id="fieldlist">
-                                                                                        @Html.Partial("_partialAddCity")
+                                                                                        @Html.Partial("_partialAddRoom")
                                                                                     </div>
                                                                                 </text>)
 
@@ -348,12 +348,15 @@
 
             var prdModel = {
 
-                City: $("#txtcity").val(),
-
-
-                StateId: $("#txtstate").val(),
-                Description: $("#txtroomstatus").val(),
-                //  CountryId: $("#txtbed").val(),
+                RoomTypeId: $("#txtRoomTypeID").val(),
+                FloorId: $("#txtFloor").val(),
+                HotelId: $("#txtHotel").val(),
+                BedId: $("#txtBed").val(),
+                RoomNumber: $("#txtRoomNo").val(),
+                RoomStatusId: $("#txtRoomStatus").val(),
+                
+                Description: $("#txtDescription").val(),
+             //  CountryId: $("#txtbed").val(),
 
             }
             var model = {
@@ -361,7 +364,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: "/City/AddCity",
+                url: "/Room/AddRoom",
 
                 data: model,
                 dataType: "json",
@@ -372,7 +375,7 @@
 
                         // btnReset_Click();
                         // location.reload();
-                        alert("City added Successfully");
+                        alert("Room added Successfully");
                         location.reload();
                         var grid = $('#grid').data("kendoGrid");
                         grid.dataSource.read();

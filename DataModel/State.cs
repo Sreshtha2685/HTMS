@@ -14,21 +14,14 @@ namespace DataModel
     
     public partial class State
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public State()
-        {
-            this.Cities = new HashSet<City>();
-        }
-    
         public int Id { get; set; }
         public string StateName { get; set; }
         public Nullable<int> CityId { get; set; }
-        public Nullable<System.DateTime> InsertedOn { get; set; }
         public Nullable<int> InsertedBy { get; set; }
+        public Nullable<System.DateTime> InsertedOn { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<City> Cities { get; set; }
+        public virtual City City { get; set; }
     }
 }
